@@ -41,7 +41,7 @@ namespace SW.CloudFiles.UnitTests
         }
 
         [TestMethod]
-        async public Task TestMethod1()
+        async public Task TestOpenReadAcync()
         {
             var cloudFiles = server.Host.Services.GetService<CloudFilesService>();
 
@@ -53,7 +53,7 @@ namespace SW.CloudFiles.UnitTests
         }
 
         [TestMethod]
-        async public Task TestMethod2()
+        async public Task TestWriteAcync()
         {
             var cloudFiles = server.Host.Services.GetService<CloudFilesService>();
 
@@ -65,7 +65,7 @@ namespace SW.CloudFiles.UnitTests
         }
 
         [TestMethod]
-        async public Task TestMethod3()
+        async public Task TestOpenWriteAsync()
         {
             var cloudFiles = server.Host.Services.GetService<CloudFilesService>();
 
