@@ -21,16 +21,7 @@ namespace SW.CloudFiles
         public CloudFilesService(CloudFilesOptions cloudFilesOptions)
         {
             this.cloudFilesOptions = cloudFilesOptions;
-            //this.httpClientFactory = httpClientFactory;
-            var clientConfig = new AmazonS3Config
-            {
-                //RegionEndpoint = RegionEndpoint.
-                ServiceURL = cloudFilesOptions.ServiceURL,
-                //HttpClientFactory = httpClientFactory
-
-            };
-
-            client = new AmazonS3Client(cloudFilesOptions.AccessKeyId, cloudFilesOptions.SecretAccessKey, clientConfig);
+            client = cloudFilesOptions.CreateClient(); // new AmazonS3Client(cloudFilesOptions.AccessKeyId, cloudFilesOptions.SecretAccessKey, clientConfig);
 
         }
 
@@ -38,6 +29,7 @@ namespace SW.CloudFiles
         {
             var request = new PutObjectRequest
             {
+                CannedACL = S3CannedACL.PublicRead,
                 BucketName = cloudFilesOptions.BucketName,
                 Key = key,
                 //ContentBody = "sample text",
