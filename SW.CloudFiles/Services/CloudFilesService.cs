@@ -29,6 +29,7 @@ namespace SW.CloudFiles
         {
             var request = new PutObjectRequest
             {
+                
                 CannedACL = S3CannedACL.PublicRead,
                 BucketName = cloudFilesOptions.BucketName,
                 Key = key,
