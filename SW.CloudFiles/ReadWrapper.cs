@@ -8,11 +8,11 @@ namespace SW.CloudFiles
 {
     public class ReadWrapper : IDisposable
     {
-        private readonly GetObjectResponse getObjectResponse;
+        private readonly object getObjectResponse;
 
-        public ReadWrapper(GetObjectResponse getObjectResponse)
+        public ReadWrapper(object getObjectResponse)
         {
-            Stream = getObjectResponse.ResponseStream;
+            Stream = ((dynamic)getObjectResponse).ResponseStream;
             this.getObjectResponse = getObjectResponse;
         }
 
@@ -21,7 +21,7 @@ namespace SW.CloudFiles
         public void Dispose()
         {
             Stream.Dispose();
-            getObjectResponse.Dispose();
+            ((dynamic)getObjectResponse).Dispose();
         }
     }
 }
