@@ -46,7 +46,7 @@ namespace SW.CloudFiles.UnitTests
 
             using var readWrapper = await cloudFiles.OpenReadAcync("test/sample.txt");
             using var diskFile = File.OpenWrite(@"c:\temp\sample.txt");
-            await readWrapper.Stream.CopyToAsync(diskFile);
+            await readWrapper.CopyToAsync(diskFile);
         }
 
         [TestMethod]
@@ -59,7 +59,7 @@ namespace SW.CloudFiles.UnitTests
             await cloudFiles.WriteAcync(diskFile, new WriteFileSettings
             {
                 Key = "test/TestWriteAcync.txt",
-                ContentType="plain/text",
+                ContentType = "plain/text",
                 Public = false
             });
         }
@@ -77,6 +77,16 @@ namespace SW.CloudFiles.UnitTests
             textWriter.Write("hello");
             textWriter.Flush();
             await writeWrapper.CompleteRequestAsync();
+        }
+
+
+        [TestMethod]
+        async public Task TestGetUrl()
+        {
+            var cloudFiles = server.Host.Services.GetService<CloudFilesService>();
+
+            //using (Stream cloudStream = await cloudFiles.OpenReadAcync("test/sample.txt"))
+            var url = cloudFiles.GetUrl("test/TestOpenWriteAsync.txt", TimeSpan.FromMinutes(2));
         }
 
 
