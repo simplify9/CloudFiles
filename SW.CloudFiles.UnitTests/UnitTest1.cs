@@ -5,8 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
-
-
+using SW.PrimitiveTypes;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -45,11 +44,9 @@ namespace SW.CloudFiles.UnitTests
         {
             var cloudFiles = server.Host.Services.GetService<CloudFilesService>();
 
-            using (var readWrapper = await cloudFiles.OpenReadAcync("test/sample.txt"))
-            using (var diskFile = File.OpenWrite(@"c:\temp\sample.txt"))
-            {
-                await readWrapper.Stream.CopyToAsync(diskFile);
-            }
+            using var readWrapper = await cloudFiles.OpenReadAcync("test/sample.txt");
+            using var diskFile = File.OpenWrite(@"c:\temp\sample.txt");
+            await readWrapper.Stream.CopyToAsync(diskFile);
         }
 
         [TestMethod]
@@ -58,11 +55,16 @@ namespace SW.CloudFiles.UnitTests
             var cloudFiles = server.Host.Services.GetService<CloudFilesService>();
 
             //using (Stream cloudStream = await cloudFiles.OpenReadAcync("test/sample.txt"))
-            using (var diskFile = File.OpenRead(@"c:\temp\sample.txt"))
+            using var diskFile = File.OpenRead(@"c:\temp\sample.txt");
+            await cloudFiles.WriteAcync(diskFile, new WriteFileSettings
             {
-                await cloudFiles.WriteAcync("test/TestWriteAcync.txt", diskFile);
-            }
+                Key = "test/TestWriteAcync.txt",
+                ContentType="plain/text",
+                Public = false
+            });
         }
+
+
 
         [TestMethod]
         async public Task TestOpenWriteAsync()
@@ -70,14 +72,11 @@ namespace SW.CloudFiles.UnitTests
             var cloudFiles = server.Host.Services.GetService<CloudFilesService>();
 
             //using (Stream cloudStream = await cloudFiles.OpenReadAcync("test/sample.txt"))
-            using (var writeWrapper = await cloudFiles.OpenWriteAsync("test/TestOpenWriteAsync.txt"))
-            using (var textWriter = new StreamWriter(writeWrapper.Stream))
-            {
-                textWriter.Write("hello");
-                textWriter.Flush(); 
-                await writeWrapper.CompleteRequestAsync();
-                //streamWrapper.Close();  
-            }
+            using var writeWrapper = await cloudFiles.OpenWriteAsync("test/TestOpenWriteAsync.txt");
+            using var textWriter = new StreamWriter(writeWrapper.Stream);
+            textWriter.Write("hello");
+            textWriter.Flush();
+            await writeWrapper.CompleteRequestAsync();
         }
 
 

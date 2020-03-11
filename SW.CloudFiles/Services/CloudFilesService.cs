@@ -2,6 +2,7 @@
 using Amazon.S3;
 using Amazon.S3.Model;
 using Amazon.S3.Util;
+using SW.PrimitiveTypes;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -15,33 +16,27 @@ namespace SW.CloudFiles
     public class CloudFilesService : IDisposable
     {
         private readonly CloudFilesOptions cloudFilesOptions;
-        //private readonly IHttpClientFactory httpClientFactory;
         private readonly AmazonS3Client client;
 
         public CloudFilesService(CloudFilesOptions cloudFilesOptions)
         {
             this.cloudFilesOptions = cloudFilesOptions;
-            client = cloudFilesOptions.CreateClient(); // new AmazonS3Client(cloudFilesOptions.AccessKeyId, cloudFilesOptions.SecretAccessKey, clientConfig);
+            client = cloudFilesOptions.CreateClient();
 
         }
 
-        async public Task WriteAcync(string key, Stream inputStream)
+        async public Task WriteAcync(Stream inputStream, WriteFileSettings settings)
         {
             var request = new PutObjectRequest
             {
-                
-                CannedACL = S3CannedACL.PublicRead,
-                BucketName = cloudFilesOptions.BucketName,
-                Key = key,
-                //ContentBody = "sample text",
+                Key = settings.Key,
+                CannedACL = settings.Public ? S3CannedACL.PublicRead : S3CannedACL.Private,
+                ContentType = settings.ContentType,
                 InputStream = inputStream,
-                //ContentType = "image/png",
-                //StorageClass = S3StorageClass.Glacier
-
+                BucketName = cloudFilesOptions.BucketName,
             };
+            _ = await client.PutObjectAsync(request);
 
-            var response = await client.PutObjectAsync(request);
-            
         }
 
         public Task<WriteWrapper> OpenWriteAsync(string key)
