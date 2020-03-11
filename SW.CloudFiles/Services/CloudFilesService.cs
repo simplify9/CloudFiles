@@ -66,18 +66,18 @@ namespace SW.CloudFiles
             return Task.FromResult(new WriteWrapper(httpWebRequest));
         }
 
-        async public Task<Stream> OpenReadAcync(string key)
+        async public Task<ReadWrapper> OpenReadAcync(string key)
         {
             GetObjectRequest request = new GetObjectRequest
             {
                 BucketName = cloudFilesOptions.BucketName,
                 Key = key,
+                
             };
 
             var response = await client.GetObjectAsync(request);
 
-            return new ReadWrapper(response).Stream;
-
+            return new ReadWrapper(response);
             //using (StreamReader reader = new StreamReader(responseStream))
             //{
             //    string title = response.Metadata["x-amz-meta-title"]; // Assume you have "title" as medata added to the object.
