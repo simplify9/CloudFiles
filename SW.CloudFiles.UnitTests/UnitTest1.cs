@@ -49,6 +49,7 @@ namespace SW.CloudFiles.UnitTests
             await readWrapper.Stream.CopyToAsync(diskFile);
         }
 
+        
         [TestMethod]
         async public Task TestWriteAcync()
         {
