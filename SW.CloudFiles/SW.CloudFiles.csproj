@@ -13,7 +13,7 @@
     <PackageReference Include="AWSSDK.S3" Version="3.3.110.32" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.2" />
     <PackageReference Include="Nito.AsyncEx" Version="5.0.0" />
-    <PackageReference Include="SimplyWorks.PrimitiveTypes" Version="2020.3.11.1" />
+    <PackageReference Include="SimplyWorks.PrimitiveTypes" Version="2020.3.11.3" />
   </ItemGroup>
 
 </Project>

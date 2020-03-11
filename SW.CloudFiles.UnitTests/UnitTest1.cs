@@ -44,9 +44,9 @@ namespace SW.CloudFiles.UnitTests
         {
             var cloudFiles = server.Host.Services.GetService<CloudFilesService>();
 
-            using var readWrapper = await cloudFiles.OpenReadAcync("test/sample.txt");
+            using var stream = await cloudFiles.OpenReadAcync("test/sample.txt");
             using var diskFile = File.OpenWrite(@"c:\temp\sample.txt");
-            await readWrapper.CopyToAsync(diskFile);
+            await stream.CopyToAsync(diskFile);
         }
 
         
@@ -82,12 +82,21 @@ namespace SW.CloudFiles.UnitTests
 
 
         [TestMethod]
-        async public Task TestGetUrl()
+        public void TestGetSignedUrl()
         {
             var cloudFiles = server.Host.Services.GetService<CloudFilesService>();
 
             //using (Stream cloudStream = await cloudFiles.OpenReadAcync("test/sample.txt"))
-            var url = cloudFiles.GetUrl("test/TestOpenWriteAsync.txt", TimeSpan.FromMinutes(2));
+            _ = cloudFiles.GetSignedUrl("test/TestOpenWriteAsync.txt", TimeSpan.FromMinutes(2));
+        }
+
+        [TestMethod]
+        public void TestGetUnsignedUrl()
+        {
+            var cloudFiles = server.Host.Services.GetService<CloudFilesService>();
+
+            //using (Stream cloudStream = await cloudFiles.OpenReadAcync("test/sample.txt"))
+            var url = cloudFiles.GetUnsignedUrl("test/TestOpenWriteAsync.txt");
         }
 
 

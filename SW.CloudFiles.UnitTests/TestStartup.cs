@@ -33,7 +33,8 @@ namespace SW.CloudFiles.UnitTests
                 config.SecretAccessKey = "YPyyTdxs+lZMQEtYIDRK9lkIzjJrCKXinE3OfKEfc7k";
                 config.ServiceURL = "https://fra1.digitaloceanspaces.com";
                 config.BucketName = "sf9";
-            }); 
+            });
+            services.AddTransient<CloudFilesService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

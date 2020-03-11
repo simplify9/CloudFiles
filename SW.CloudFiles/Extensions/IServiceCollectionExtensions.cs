@@ -60,25 +60,62 @@ namespace SW.CloudFiles
 
                 var newRules = new List<LifecycleRule> { };
 
-                if (config.Rules.FirstOrDefault(r => r.Prefix == "temp1/") == null) newRules.Add(new LifecycleRule
+                if (config.Rules?.FirstOrDefault(r => r.Id == "temp1") == null || config.Rules?.FirstOrDefault(r => r.Id == "temp1")?.Status != LifecycleRuleStatus.Enabled) newRules.Add(new LifecycleRule
                 {
                     Id = "temp1",
                     Expiration = new LifecycleRuleExpiration { Days = 1 },
-                    Prefix = "temp1/",
+                    Filter = new LifecycleFilter()
+                    {
+                        LifecycleFilterPredicate = new LifecyclePrefixPredicate()
+                        {
+                            Prefix = "temp1/"
+                        }
+                    },
+                    Status = LifecycleRuleStatus.Enabled
+
                 });
 
-                if (config.Rules.FirstOrDefault(r => r.Prefix == "temp7/") == null) newRules.Add(new LifecycleRule
+                if (config.Rules?.FirstOrDefault(r => r.Id  == "temp7") == null || config.Rules?.FirstOrDefault(r => r.Id == "temp7")?.Status != LifecycleRuleStatus.Enabled) newRules.Add(new LifecycleRule
                 {
                     Id = "temp7",
                     Expiration = new LifecycleRuleExpiration { Days = 7 },
-                    Prefix = "temp7/",
+                    Filter = new LifecycleFilter()
+                    {
+                        LifecycleFilterPredicate = new LifecyclePrefixPredicate()
+                        {
+                            Prefix = "temp7/"
+                        }
+                    },
+                    Status = LifecycleRuleStatus.Enabled
                 });
 
-                if (config.Rules.FirstOrDefault(r => r.Prefix == "temp30/") == null) newRules.Add(new LifecycleRule
+                if (config.Rules?.FirstOrDefault(r => r.Id == "temp30") == null || config.Rules?.FirstOrDefault(r => r.Id == "temp30")?.Status != LifecycleRuleStatus.Enabled) newRules.Add(new LifecycleRule
                 {
                     Id = "temp30",
                     Expiration = new LifecycleRuleExpiration { Days = 30 },
-                    Prefix = "temp30/",
+                    Filter = new LifecycleFilter
+                    {
+                        LifecycleFilterPredicate = new LifecyclePrefixPredicate
+                        {
+                            Prefix = "temp30/"
+                        }
+                    },
+                    Status = LifecycleRuleStatus.Enabled
+                });
+
+                if (config.Rules?.FirstOrDefault(r => r.Id == "temp365") == null || config.Rules?.FirstOrDefault(r => r.Id == "temp365")?.Status != LifecycleRuleStatus.Enabled) newRules.Add(new LifecycleRule
+                {
+                    Id = "temp365",
+                    Expiration = new LifecycleRuleExpiration { Days = 30 },
+                    Filter = new LifecycleFilter()
+                    {
+                        LifecycleFilterPredicate = new LifecyclePrefixPredicate()
+                        {
+                            Prefix = "temp365/"
+                        }
+                    },
+                    Status = LifecycleRuleStatus.Enabled
+
                 });
 
                 if (newRules.Count > 0)
