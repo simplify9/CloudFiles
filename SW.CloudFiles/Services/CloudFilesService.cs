@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace SW.CloudFiles
 {
-    public class CloudFilesService : IDisposable
+    public class CloudFilesService : IDisposable, ICloudFilesService
     {
         private readonly CloudFilesOptions cloudFilesOptions;
         private readonly AmazonS3Client client;
@@ -37,7 +37,39 @@ namespace SW.CloudFiles
             };
             _ = await client.PutObjectAsync(request);
 
+
+
         }
+
+        public string GetSignedUrl(string key, TimeSpan expiry)
+        {
+            var request = new GetPreSignedUrlRequest
+            {
+                BucketName = cloudFilesOptions.BucketName,
+                Key = key,
+                Expires = DateTime.UtcNow.Add(expiry),
+                Verb = HttpVerb.GET,
+            };
+            
+            return client.GetPreSignedURL(request);
+        }
+
+        public string GetUnsignedUrl(string key)
+        {
+            var request = new GetPreSignedUrlRequest
+            {
+                BucketName = cloudFilesOptions.BucketName,
+                Key = key,
+                Expires = DateTime.UtcNow.AddSeconds(1),
+                Verb = HttpVerb.GET,
+            };
+
+            var signedUrl = client.GetPreSignedURL(request);
+
+            return signedUrl.Substring(0,signedUrl.IndexOf('?'));
+        }
+
+
 
         public Task<WriteWrapper> OpenWriteAsync(string key)
         {
@@ -58,19 +90,6 @@ namespace SW.CloudFiles
             return Task.FromResult(new WriteWrapper(httpWebRequest));
         }
 
-        public string GetUrl(string key, TimeSpan expiry, string verb = "get")
-        {
-            var request = new GetPreSignedUrlRequest
-            {
-                BucketName = cloudFilesOptions.BucketName,
-                Key = key,
-                Expires = DateTime.UtcNow.Add(expiry),
-                Verb = HttpVerb.GET,
-            };
-
-            return client.GetPreSignedURL(request);
-        }
-
         async public Task<Stream> OpenReadAcync(string key)
         {
             GetObjectRequest request = new GetObjectRequest
@@ -82,7 +101,7 @@ namespace SW.CloudFiles
 
             var response = await client.GetObjectAsync(request);
 
-            return response.ResponseStream ;
+            return response.ResponseStream;
             //using (StreamReader reader = new StreamReader(responseStream))
             //{
             //    string title = response.Metadata["x-amz-meta-title"]; // Assume you have "title" as medata added to the object.
