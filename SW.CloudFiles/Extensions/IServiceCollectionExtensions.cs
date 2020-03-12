@@ -132,11 +132,8 @@ namespace SW.CloudFiles
 
             }
 
-            
             serviceCollection.AddSingleton(cloudFilesOptions);
             serviceCollection.AddTransient<ICloudFilesService, CloudFilesService>();
-            //serviceCollection.AddTransient<CloudFilesService>();
-            //serviceCollection.AddHttpClient();
 
             return serviceCollection;
         }

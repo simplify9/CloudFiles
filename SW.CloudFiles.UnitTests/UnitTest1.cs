@@ -42,7 +42,7 @@ namespace SW.CloudFiles.UnitTests
         [TestMethod]
         async public Task TestOpenReadAcync()
         {
-            var cloudFiles = server.Host.Services.GetService<CloudFilesService>();
+            var cloudFiles = server.Host.Services.GetService<ICloudFilesService>();
 
             using var stream = await cloudFiles.OpenReadAcync("test/sample.txt");
             using var diskFile = File.OpenWrite(@"c:\temp\sample.txt");
@@ -53,7 +53,7 @@ namespace SW.CloudFiles.UnitTests
         [TestMethod]
         async public Task TestWriteAcync()
         {
-            var cloudFiles = server.Host.Services.GetService<CloudFilesService>();
+            var cloudFiles = server.Host.Services.GetService<ICloudFilesService>();
 
             //using (Stream cloudStream = await cloudFiles.OpenReadAcync("test/sample.txt"))
             using var diskFile = File.OpenRead(@"c:\temp\sample.txt");
@@ -70,7 +70,7 @@ namespace SW.CloudFiles.UnitTests
         [TestMethod]
         async public Task TestOpenWriteAsync()
         {
-            var cloudFiles = server.Host.Services.GetService<CloudFilesService>();
+            var cloudFiles = server.Host.Services.GetService<ICloudFilesService>();
 
             //using (Stream cloudStream = await cloudFiles.OpenReadAcync("test/sample.txt"))
             using var writeWrapper = await cloudFiles.OpenWriteAsync("test/TestOpenWriteAsync.txt");
@@ -84,7 +84,7 @@ namespace SW.CloudFiles.UnitTests
         [TestMethod]
         public void TestGetSignedUrl()
         {
-            var cloudFiles = server.Host.Services.GetService<CloudFilesService>();
+            var cloudFiles = server.Host.Services.GetService<ICloudFilesService>();
 
             //using (Stream cloudStream = await cloudFiles.OpenReadAcync("test/sample.txt"))
             _ = cloudFiles.GetSignedUrl("test/TestOpenWriteAsync.txt", TimeSpan.FromMinutes(2));
@@ -93,7 +93,7 @@ namespace SW.CloudFiles.UnitTests
         [TestMethod]
         public void TestGetUnsignedUrl()
         {
-            var cloudFiles = server.Host.Services.GetService<CloudFilesService>();
+            var cloudFiles = server.Host.Services.GetService<ICloudFilesService>();
 
             //using (Stream cloudStream = await cloudFiles.OpenReadAcync("test/sample.txt"))
             var url = cloudFiles.GetUnsignedUrl("test/TestOpenWriteAsync.txt");

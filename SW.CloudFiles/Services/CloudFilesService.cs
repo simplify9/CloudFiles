@@ -78,14 +78,26 @@ namespace SW.CloudFiles
             {
                 BucketName = cloudFilesOptions.BucketName,
                 Key = key,
+                ContentType = "text/plain",
+                
                 Expires = DateTime.UtcNow.AddHours(1),
                 Verb = HttpVerb.PUT,
             };
 
-            var url = client.GetPreSignedURL(request);
+            //request.Metadata.Add("x-amz-acl", "public-read");
 
+            request.Headers["x-amz-acl"] = "public-read";
+
+
+
+
+            var url = client.GetPreSignedURL(request);
+            
             HttpWebRequest httpWebRequest = WebRequest.Create(url) as HttpWebRequest;
-            httpWebRequest.Method = "PUT";
+            httpWebRequest.ContentType = "text/plain";
+            httpWebRequest.Headers.Add("x-amz-acl", "public-read");
+            httpWebRequest.Method = "PUT"; 
+            
 
             return Task.FromResult(new WriteWrapper(httpWebRequest));
         }
