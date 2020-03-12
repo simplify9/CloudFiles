@@ -31,7 +31,7 @@ namespace SW.CloudFiles.UnitTests
             {
                 config.AccessKeyId = "R3LNFRKWMAC4OCCRICS5";
                 config.SecretAccessKey = "YPyyTdxs+lZMQEtYIDRK9lkIzjJrCKXinE3OfKEfc7k";
-                config.ServiceURL = "https://fra1.digitaloceanspaces.com";
+                config.ServiceUrl = "https://fra1.digitaloceanspaces.com";
                 config.BucketName = "sf9";
             }); 
         }

@@ -13,7 +13,7 @@ namespace SW.CloudFiles
             var clientConfig = new AmazonS3Config
             {
                 //RegionEndpoint = RegionEndpoint.
-                ServiceURL = cloudFilesOptions.ServiceURL,
+                ServiceURL = cloudFilesOptions.ServiceUrl,
                 //HttpClientFactory = httpClientFactory
 
             };
