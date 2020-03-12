@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <PackageId>SimplyWorks.CloudFiles</PackageId>
     <Company>SimplyWorks</Company>
     <Authors>SimplyWorks</Authors>
@@ -10,10 +10,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>  
+
+  <ItemGroup>
     <PackageReference Include="AWSSDK.S3" Version="3.3.110.32" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.2" />
     <PackageReference Include="Nito.AsyncEx" Version="5.0.0" />
-    <PackageReference Include="SimplyWorks.PrimitiveTypes" Version="2020.3.11.3" />
+    <PackageReference Include="SimplyWorks.PrimitiveTypes" Version="2020.3.12.1" />
   </ItemGroup>
 
 </Project>

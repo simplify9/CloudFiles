@@ -6,7 +6,7 @@ using System.Text;
 
 namespace SW.CloudFiles
 {
-    public class ReadWrapper : IDisposable
+    internal class ReadWrapper : IDisposable
     {
         private readonly GetObjectResponse getObjectResponse;
 

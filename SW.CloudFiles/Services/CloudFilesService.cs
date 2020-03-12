@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace SW.CloudFiles
 {
-    public class CloudFilesService : IDisposable, ICloudFilesService
+    internal class CloudFilesService : IDisposable, ICloudFilesService
     {
         private readonly CloudFilesOptions cloudFilesOptions;
         private readonly AmazonS3Client client;
@@ -34,11 +34,10 @@ namespace SW.CloudFiles
                 ContentType = settings.ContentType,
                 InputStream = inputStream,
                 BucketName = cloudFilesOptions.BucketName,
+
             };
-            _ = await client.PutObjectAsync(request);
 
-
-
+            await client.PutObjectAsync(request);
         }
 
         public string GetSignedUrl(string key, TimeSpan expiry)
@@ -50,11 +49,11 @@ namespace SW.CloudFiles
                 Expires = DateTime.UtcNow.Add(expiry),
                 Verb = HttpVerb.GET,
             };
-            
+
             return client.GetPreSignedURL(request);
         }
 
-        public string GetUnsignedUrl(string key)
+        public string GetUrl(string key)
         {
             var request = new GetPreSignedUrlRequest
             {
@@ -66,40 +65,38 @@ namespace SW.CloudFiles
 
             var signedUrl = client.GetPreSignedURL(request);
 
-            return signedUrl.Substring(0,signedUrl.IndexOf('?'));
+            return signedUrl.Substring(0, signedUrl.IndexOf('?'));
         }
 
 
 
-        public Task<WriteWrapper> OpenWriteAsync(string key)
+        public WriteWrapper OpenWrite(WriteFileSettings settings)
         {
 
             var request = new GetPreSignedUrlRequest
             {
                 BucketName = cloudFilesOptions.BucketName,
-                Key = key,
-                ContentType = "text/plain",
-                
+                Key = settings.Key,
+                ContentType = settings.ContentType,
+
                 Expires = DateTime.UtcNow.AddHours(1),
                 Verb = HttpVerb.PUT,
             };
 
-            //request.Metadata.Add("x-amz-acl", "public-read");
-
-            request.Headers["x-amz-acl"] = "public-read";
-
-
-
+            if (settings.Public)
+                request.Headers["x-amz-acl"] = "public-read";
 
             var url = client.GetPreSignedURL(request);
-            
-            HttpWebRequest httpWebRequest = WebRequest.Create(url) as HttpWebRequest;
-            httpWebRequest.ContentType = "text/plain";
-            httpWebRequest.Headers.Add("x-amz-acl", "public-read");
-            httpWebRequest.Method = "PUT"; 
-            
 
-            return Task.FromResult(new WriteWrapper(httpWebRequest));
+            HttpWebRequest httpWebRequest = WebRequest.Create(url) as HttpWebRequest;
+            httpWebRequest.ContentType = settings.ContentType;
+            if (settings.Public)
+                httpWebRequest.Headers.Add("x-amz-acl", "public-read");
+
+            httpWebRequest.Method = "PUT";
+
+
+            return new WriteWrapper(httpWebRequest);
         }
 
         async public Task<Stream> OpenReadAcync(string key)
@@ -108,7 +105,7 @@ namespace SW.CloudFiles
             {
                 BucketName = cloudFilesOptions.BucketName,
                 Key = key,
-                
+
             };
 
             var response = await client.GetObjectAsync(request);

@@ -27,14 +27,14 @@ namespace SW.CloudFiles.UnitTests
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCloudFiles(config =>
-            {
-                config.AccessKeyId = "R3LNFRKWMAC4OCCRICS5";
-                config.SecretAccessKey = "YPyyTdxs+lZMQEtYIDRK9lkIzjJrCKXinE3OfKEfc7k";
-                config.ServiceUrl = "https://fra1.digitaloceanspaces.com";
-                config.BucketName = "sf9";
-            });
-            //services.AddTransient<CloudFilesService>();
+            //services.AddCloudFiles(config =>
+            //{
+            //    config.AccessKeyId = "R3LNFRKWMAC4OCCRICS5";
+            //    config.SecretAccessKey = "YPyyTdxs+lZMQEtYIDRK9lkIzjJrCKXinE3OfKEfc7k";
+            //    config.ServiceUrl = "https://fra1.digitaloceanspaces.com";
+            //    config.BucketName = "sf9";
+            //});
+            services.AddCloudFiles();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

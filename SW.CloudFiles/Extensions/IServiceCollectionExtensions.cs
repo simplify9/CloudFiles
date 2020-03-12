@@ -2,6 +2,7 @@
 using Amazon.S3;
 using Amazon.S3.Model;
 using Amazon.S3.Util;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Nito.AsyncEx;
 using Nito.AsyncEx.Synchronous;
@@ -29,17 +30,16 @@ namespace SW.CloudFiles
         /// <param name="serviceCollection"></param>
         /// <param name="configure"></param>
         /// <returns></returns>
-        public static IServiceCollection AddCloudFiles(this IServiceCollection serviceCollection, Action<CloudFilesOptions> configure)
+        public static IServiceCollection AddCloudFiles(this IServiceCollection serviceCollection, Action<CloudFilesOptions> configure = null)
         {
             var cloudFilesOptions = new CloudFilesOptions();
-            configure.Invoke(cloudFilesOptions);
+            if (configure != null) configure.Invoke(cloudFilesOptions);
+
+            var serviceProvider = serviceCollection.BuildServiceProvider();
+            serviceProvider.GetRequiredService<IConfiguration>().GetSection(CloudFilesOptions.ConfigurationSection).Bind(cloudFilesOptions);
 
             using (var client = cloudFilesOptions.CreateClient())
             {
-
-
-
-                var task = Task.Run(async () => await AmazonS3Util.DoesS3BucketExistV2Async(client, cloudFilesOptions.BucketName));
 
                 if (!AmazonS3Util.DoesS3BucketExistV2Async(client, cloudFilesOptions.BucketName).WaitAndUnwrapException())
                 {
@@ -48,7 +48,7 @@ namespace SW.CloudFiles
                         BucketName = cloudFilesOptions.BucketName,
                         CannedACL = S3CannedACL.Private
                     };
-                    _ =  client.PutBucketAsync(putBucketRequest).WaitAndUnwrapException();
+                    client.PutBucketAsync(putBucketRequest).WaitAndUnwrapException();
 
                 }
 
@@ -106,7 +106,7 @@ namespace SW.CloudFiles
                 if (config.Rules?.FirstOrDefault(r => r.Id == "temp365") == null || config.Rules?.FirstOrDefault(r => r.Id == "temp365")?.Status != LifecycleRuleStatus.Enabled) newRules.Add(new LifecycleRule
                 {
                     Id = "temp365",
-                    Expiration = new LifecycleRuleExpiration { Days = 30 },
+                    Expiration = new LifecycleRuleExpiration { Days = 365 },
                     Filter = new LifecycleFilter()
                     {
                         LifecycleFilterPredicate = new LifecyclePrefixPredicate()

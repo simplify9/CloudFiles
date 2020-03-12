@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
@@ -28,9 +29,11 @@ namespace SW.CloudFiles.UnitTests
         [ClassInitialize]
         public static void ClassInitialize(TestContext tcontext)
         {
-            server = new TestServer(new WebHostBuilder()
+            server = new TestServer(WebHost.CreateDefaultBuilder()
+                .UseDefaultServiceProvider((context, options) => { options.ValidateScopes = true; })
                 .UseEnvironment("UnitTesting")
                 .UseStartup<TestStartup>());
+
         }
 
         [ClassCleanup]
@@ -44,7 +47,7 @@ namespace SW.CloudFiles.UnitTests
         {
             var cloudFiles = server.Host.Services.GetService<ICloudFilesService>();
 
-            using var stream = await cloudFiles.OpenReadAcync("test/sample.txt");
+            using var stream = await cloudFiles.OpenReadAcync("test/TestWriteAcync.txt");
             using var diskFile = File.OpenWrite(@"c:\temp\sample.txt");
             await stream.CopyToAsync(diskFile);
         }
@@ -61,7 +64,7 @@ namespace SW.CloudFiles.UnitTests
             {
                 Key = "test/TestWriteAcync.txt",
                 ContentType = "plain/text",
-                Public = false
+                Public = true
             });
         }
 
@@ -73,7 +76,11 @@ namespace SW.CloudFiles.UnitTests
             var cloudFiles = server.Host.Services.GetService<ICloudFilesService>();
 
             //using (Stream cloudStream = await cloudFiles.OpenReadAcync("test/sample.txt"))
-            using var writeWrapper = await cloudFiles.OpenWriteAsync("test/TestOpenWriteAsync.txt");
+            using var writeWrapper =  cloudFiles.OpenWrite(new WriteFileSettings
+            {
+                Key = "test/TestOpenWriteAsync1.txt",
+                ContentType = "text/plain"
+            });
             using var textWriter = new StreamWriter(writeWrapper.Stream);
             textWriter.Write("hello");
             textWriter.Flush();
@@ -96,7 +103,7 @@ namespace SW.CloudFiles.UnitTests
             var cloudFiles = server.Host.Services.GetService<ICloudFilesService>();
 
             //using (Stream cloudStream = await cloudFiles.OpenReadAcync("test/sample.txt"))
-            var url = cloudFiles.GetUnsignedUrl("test/TestOpenWriteAsync.txt");
+            var url = cloudFiles.GetUrl("test/TestOpenWriteAsync.txt");
         }
 
 
