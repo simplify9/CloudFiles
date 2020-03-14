@@ -68,6 +68,21 @@ namespace SW.CloudFiles.UnitTests
             });
         }
 
+        [TestMethod]
+        async public Task TestWriteTextAcync()
+        {
+            var cloudFiles = server.Host.Services.GetService<ICloudFilesService>();
+
+            //using (Stream cloudStream = await cloudFiles.OpenReadAcync("test/sample.txt"))
+            //using var diskFile = File.OpenRead(@"c:\temp\sample.txt");
+            await cloudFiles.WriteTextAcync("test content", new WriteFileSettings
+            {
+                Key = "temp1/TestWriteTextAsync.txt",
+                //ContentType = "plain/text",
+                Public = true
+            });
+        }
+
 
 
         [TestMethod]

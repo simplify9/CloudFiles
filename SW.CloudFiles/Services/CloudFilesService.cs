@@ -33,6 +33,21 @@ namespace SW.CloudFiles
                 CannedACL = settings.Public ? S3CannedACL.PublicRead : S3CannedACL.Private,
                 ContentType = settings.ContentType,
                 InputStream = inputStream,
+                
+                BucketName = cloudFilesOptions.BucketName,
+
+            };
+
+            await client.PutObjectAsync(request);
+        }
+
+        async public Task WriteTextAcync(string text, WriteFileSettings settings)
+        {
+            var request = new PutObjectRequest
+            {
+                Key = settings.Key,
+                CannedACL = settings.Public ? S3CannedACL.PublicRead : S3CannedACL.Private,
+                ContentBody = text,
                 BucketName = cloudFilesOptions.BucketName,
 
             };
