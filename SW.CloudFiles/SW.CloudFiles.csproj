@@ -14,9 +14,9 @@
   </ItemGroup>  
 
   <ItemGroup>
-    <PackageReference Include="AWSSDK.S3" Version="3.3.110.33" />
+    <PackageReference Include="AWSSDK.S3" Version="3.3.110.38" />
     <PackageReference Include="Nito.AsyncEx" Version="5.0.0" />
-    <PackageReference Include="SimplyWorks.PrimitiveTypes" Version="2020.3.14.1" />
+    <PackageReference Include="SimplyWorks.PrimitiveTypes" Version="2020.3.22.4" />
   </ItemGroup>
 
 </Project>

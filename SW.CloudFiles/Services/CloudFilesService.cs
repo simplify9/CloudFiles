@@ -25,23 +25,34 @@ namespace SW.CloudFiles
 
         }
 
-        async public Task WriteAcync(Stream inputStream, WriteFileSettings settings)
+        async public Task<RemoteBlob> WriteAcync(Stream inputStream, WriteFileSettings settings)
         {
+
+            var contentLength = inputStream.Length;
+
             var request = new PutObjectRequest
             {
                 Key = settings.Key,
                 CannedACL = settings.Public ? S3CannedACL.PublicRead : S3CannedACL.Private,
                 ContentType = settings.ContentType,
                 InputStream = inputStream,
-                
+                AutoCloseStream = settings.CloseInputStream,
                 BucketName = cloudFilesOptions.BucketName,
 
             };
 
             await client.PutObjectAsync(request);
+
+            return new RemoteBlob
+            {
+                Location = settings.Public ? GetUrl(settings.Key) : GetSignedUrl(settings.Key, TimeSpan.FromHours(1)),
+                MimeType = settings.ContentType,
+                Name = settings.Key,
+                Size = Convert.ToInt32( contentLength)
+            };
         }
 
-        async public Task WriteTextAcync(string text, WriteFileSettings settings)
+        async public Task<RemoteBlob> WriteTextAcync(string text, WriteFileSettings settings)
         {
             var request = new PutObjectRequest
             {
@@ -53,6 +64,14 @@ namespace SW.CloudFiles
             };
 
             await client.PutObjectAsync(request);
+
+            return new RemoteBlob
+            {
+                Location = settings.Public ? GetUrl(settings.Key) : GetSignedUrl(settings.Key, TimeSpan.FromHours(1)),
+                MimeType = settings.ContentType,
+                Name = settings.Key,
+                Size = Convert.ToInt32(text.Length)
+            };
         }
 
         public string GetSignedUrl(string key, TimeSpan expiry)
@@ -93,7 +112,6 @@ namespace SW.CloudFiles
                 BucketName = cloudFilesOptions.BucketName,
                 Key = settings.Key,
                 ContentType = settings.ContentType,
-
                 Expires = DateTime.UtcNow.AddHours(1),
                 Verb = HttpVerb.PUT,
             };
@@ -111,7 +129,7 @@ namespace SW.CloudFiles
             httpWebRequest.Method = "PUT";
 
 
-            return new WriteWrapper(httpWebRequest);
+            return new WriteWrapper(httpWebRequest, this, settings);
         }
 
         async public Task<Stream> OpenReadAcync(string key)
