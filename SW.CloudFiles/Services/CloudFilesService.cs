@@ -48,7 +48,7 @@ namespace SW.CloudFiles
                 Location = settings.Public ? GetUrl(settings.Key) : GetSignedUrl(settings.Key, TimeSpan.FromHours(1)),
                 MimeType = settings.ContentType,
                 Name = settings.Key,
-                Size = Convert.ToInt32( contentLength)
+                Size = Convert.ToInt32(contentLength)
             };
         }
 
@@ -153,6 +153,34 @@ namespace SW.CloudFiles
 
             //    responseBody = reader.ReadToEnd(); // Now you process the response body.
             //}
+        }
+
+        public async Task<IEnumerable<CloudFileInfo>> ListAsync(string prefix)
+        {
+
+            ListObjectsV2Request request = new ListObjectsV2Request
+            {
+                BucketName = cloudFilesOptions.BucketName,
+                Prefix = prefix
+            };
+
+            var result = new List<CloudFileInfo>();
+
+            var response = await client.ListObjectsV2Async(request);
+
+            foreach (var entry in response.S3Objects)
+            {
+                result.Add(new CloudFileInfo
+                {
+                    Key = entry.Key,
+                    Size = entry.Size,
+                    Signature = entry.ETag
+
+                });
+            }
+
+            return result;
+
         }
 
         public void Dispose()

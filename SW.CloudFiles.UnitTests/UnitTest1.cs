@@ -102,6 +102,15 @@ namespace SW.CloudFiles.UnitTests
             var rb = await writeWrapper.CompleteRequestAsync();
         }
 
+        [TestMethod]
+        async public Task TestListAsync()
+        {
+            var cloudFiles = server.Host.Services.GetService<ICloudFilesService>();
+
+            //using (Stream cloudStream = await cloudFiles.OpenReadAcync("test/sample.txt"))
+            var result = await cloudFiles.ListAsync("test");
+        }
+
 
         [TestMethod]
         public void TestGetSignedUrl()
