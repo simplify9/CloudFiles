@@ -130,6 +130,15 @@ namespace SW.CloudFiles.UnitTests
             var url = cloudFiles.GetUrl("test/TestOpenWriteAsync.txt");
         }
 
+        [TestMethod]
+        async public Task TestGetMetadata()
+        {
+            var cloudFiles = server.Host.Services.GetService<ICloudFilesService>();
+
+            //using (Stream cloudStream = await cloudFiles.OpenReadAcync("test/sample.txt"))
+            var metadata = await cloudFiles.GetMetadataAsync("test/TestOpenWriteAsync.txt");
+        }
+
 
 
 

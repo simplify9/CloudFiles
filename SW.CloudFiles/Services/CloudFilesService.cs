@@ -132,6 +132,27 @@ namespace SW.CloudFiles
             return new WriteWrapper(httpWebRequest, this, settings);
         }
 
+        async public Task<IReadOnlyDictionary<string, string>> GetMetadataAsync(string key)
+        {
+            GetObjectMetadataRequest request = new GetObjectMetadataRequest
+            {
+                BucketName = cloudFilesOptions.BucketName,
+                Key = key,
+
+
+            };
+
+            var response = await client.GetObjectMetadataAsync(request);
+
+            return new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+            {
+                {"Hash",response.ETag.Replace("\"", "") },
+                {"ContentType",response.Headers["Content-Type"] },
+                {"ContentLength",response.Headers["Content-Length"] },
+
+            };
+        }
+
         async public Task<Stream> OpenReadAcync(string key)
         {
             GetObjectRequest request = new GetObjectRequest
@@ -139,10 +160,10 @@ namespace SW.CloudFiles
                 BucketName = cloudFilesOptions.BucketName,
                 Key = key,
 
+
             };
 
             var response = await client.GetObjectAsync(request);
-
             return response.ResponseStream;
             //using (StreamReader reader = new StreamReader(responseStream))
             //{
