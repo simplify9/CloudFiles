@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace SW.CloudFiles
 {
-    internal class CloudFilesService : IDisposable, ICloudFilesService
+    public class CloudFilesService : IDisposable, ICloudFilesService
     {
         private readonly CloudFilesOptions cloudFilesOptions;
         private readonly AmazonS3Client client;

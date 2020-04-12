@@ -10,8 +10,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-
-
+using SW.CloudFiles.Extensions;
 
 namespace SW.CloudFiles.UnitTests
 {

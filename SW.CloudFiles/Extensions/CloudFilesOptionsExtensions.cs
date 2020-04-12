@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SW.CloudFiles
 {
-    internal static class CloudFilesOptionsExtensions
+    public static class CloudFilesOptionsExtensions
     {
         public static AmazonS3Client CreateClient(this CloudFilesOptions cloudFilesOptions)
         {
