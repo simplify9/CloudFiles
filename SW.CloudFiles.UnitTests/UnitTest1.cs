@@ -47,7 +47,7 @@ namespace SW.CloudFiles.UnitTests
         {
             var cloudFiles = server.Host.Services.GetService<ICloudFilesService>();
 
-            using var stream = await cloudFiles.OpenReadAcync("test/TestWriteAcync.txt");
+            using var stream = await cloudFiles.OpenReadAsync("test/TestWriteAcync.txt");
             using var diskFile = File.OpenWrite(@"c:\temp\sample.txt");
             await stream.CopyToAsync(diskFile);
         }
@@ -60,7 +60,7 @@ namespace SW.CloudFiles.UnitTests
 
             //using (Stream cloudStream = await cloudFiles.OpenReadAcync("test/sample.txt"))
             using var diskFile = File.OpenRead(@"c:\temp\sample.txt");
-            var rb = await cloudFiles.WriteAcync(diskFile, new WriteFileSettings
+            var rb = await cloudFiles.WriteAsync(diskFile, new WriteFileSettings
             {
                 Key = "test/TestWriteAcync.txt",
                 ContentType = "plain/text",
@@ -75,7 +75,7 @@ namespace SW.CloudFiles.UnitTests
 
             //using (Stream cloudStream = await cloudFiles.OpenReadAcync("test/sample.txt"))
             //using var diskFile = File.OpenRead(@"c:\temp\sample.txt");
-            var rb = await cloudFiles.WriteTextAcync("test content", new WriteFileSettings
+            var rb = await cloudFiles.WriteTextAsync("test content", new WriteFileSettings
             {
                 Key = "temp1/TestWriteTextAsync.txt",
                 //ContentType = "plain/text",

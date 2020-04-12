@@ -27,7 +27,7 @@ namespace SW.CloudFiles
 
         }
 
-        async public Task<RemoteBlob> WriteAcync(Stream inputStream, WriteFileSettings settings)
+        async public Task<RemoteBlob> WriteAsync(Stream inputStream, WriteFileSettings settings)
         {
 
             var contentLength = inputStream.Length;
@@ -58,7 +58,7 @@ namespace SW.CloudFiles
             };
         }
 
-        async public Task<RemoteBlob> WriteTextAcync(string text, WriteFileSettings settings)
+        async public Task<RemoteBlob> WriteTextAsync(string text, WriteFileSettings settings)
         {
             var request = new PutObjectRequest
             {
@@ -169,7 +169,7 @@ namespace SW.CloudFiles
 
         }
 
-        async public Task<Stream> OpenReadAcync(string key)
+        async public Task<Stream> OpenReadAsync(string key)
         {
             GetObjectRequest request = new GetObjectRequest
             {
