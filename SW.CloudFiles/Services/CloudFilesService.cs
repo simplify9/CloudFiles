@@ -15,6 +15,8 @@ namespace SW.CloudFiles
 {
     public class CloudFilesService : IDisposable, ICloudFilesService
     {
+
+        private const string metadataPrefix = "x-amz-meta-";
         private readonly CloudFilesOptions cloudFilesOptions;
         private readonly AmazonS3Client client;
 
@@ -38,8 +40,12 @@ namespace SW.CloudFiles
                 InputStream = inputStream,
                 AutoCloseStream = settings.CloseInputStream,
                 BucketName = cloudFilesOptions.BucketName,
+               
 
             };
+
+            foreach (var kvp in settings.Metadata)
+                request.Metadata.Add(kvp.Key, kvp.Value);
 
             await client.PutObjectAsync(request);
 
@@ -114,6 +120,7 @@ namespace SW.CloudFiles
                 ContentType = settings.ContentType,
                 Expires = DateTime.UtcNow.AddHours(1),
                 Verb = HttpVerb.PUT,
+                
             };
 
             if (settings.Public)
@@ -144,13 +151,22 @@ namespace SW.CloudFiles
 
             var response = await client.GetObjectMetadataAsync(request);
 
-            return new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+            var result = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
             {
                 {"Hash",response.ETag.Replace("\"", "") },
                 {"ContentType",response.Headers["Content-Type"] },
                 {"ContentLength",response.Headers["Content-Length"] },
 
             };
+
+            foreach (var metadataKey in response.Metadata.Keys)
+            {
+                result.Add(metadataKey.Replace(metadataPrefix, ""), response.Metadata[metadataKey]);
+            }
+
+
+            return result;
+
         }
 
         async public Task<Stream> OpenReadAcync(string key)
