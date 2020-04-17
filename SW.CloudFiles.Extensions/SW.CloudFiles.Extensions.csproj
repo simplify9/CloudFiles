@@ -2,6 +2,9 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <PackageId>SimplyWorks.CloudFiles.Extensions</PackageId>
+    <Authors>SimplyWorks.CloudFiles</Authors>
+    <Product>SimplyWorks.CloudFiles.Extensions</Product>
   </PropertyGroup>
 
   <ItemGroup>
