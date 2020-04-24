@@ -8,8 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AWSSDK.S3" Version="3.3.110.50" />
-    <PackageReference Include="SimplyWorks.PrimitiveTypes" Version="2020.4.13.1" />
+    <PackageReference Include="AWSSDK.S3" Version="3.3.110.56" />
+    <PackageReference Include="SimplyWorks.PrimitiveTypes" Version="2020.4.24.1" />
   </ItemGroup>
 
 </Project>
