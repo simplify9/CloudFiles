@@ -3,8 +3,14 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <PackageId>SimplyWorks.CloudFiles.Extensions</PackageId>
-    <Authors>SimplyWorks.CloudFiles</Authors>
     <Product>SimplyWorks.CloudFiles.Extensions</Product>
+    <Authors>Simplify9</Authors>
+    <Copyright>Simplify9</Copyright>
+    <Company>Simplify9</Company>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression> 
+    <PackageProjectUrl>https://github.com/simplify9/CloudFiles</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/simplify9/CloudFiles</RepositoryUrl>
+ 
   </PropertyGroup>
 
   <ItemGroup>
