@@ -10,7 +10,7 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression> 
     <PackageProjectUrl>https://github.com/simplify9/CloudFiles</PackageProjectUrl>
     <RepositoryUrl>https://github.com/simplify9/CloudFiles</RepositoryUrl>
- 
+    <PackageIcon>icon.png</PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -23,6 +23,13 @@
   
   <ItemGroup>
     <ProjectReference Include="..\SW.CloudFiles\SW.CloudFiles.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="../icon.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
