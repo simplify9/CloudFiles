@@ -10,11 +10,18 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression> 
     <PackageProjectUrl>https://github.com/simplify9/CloudFiles</PackageProjectUrl>
     <RepositoryUrl>https://github.com/simplify9/CloudFiles</RepositoryUrl>
+    <PackageIcon>icon.png</PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="AWSSDK.S3" Version="3.3.110.56" />
     <PackageReference Include="SimplyWorks.PrimitiveTypes" Version="2020.4.24.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="../icon.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
