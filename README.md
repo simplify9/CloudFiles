@@ -23,7 +23,8 @@ Add the *ICoudFilesService* interface (from [PrimitiveTypes](https://github.com/
 
 We initialize this function with its corresponding primitive type, and it then reads a file from the bucket and writes it onto the local disk. 
 
-```[TestMethod]
+``` C#
+[TestMethod]
         async public Task TestOpenReadAcync()
         {
             var cloudFiles = server.Host.Services.GetService<ICloudFilesService>();
