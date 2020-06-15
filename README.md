@@ -12,8 +12,6 @@ While the other is used to integrate it into the dependency injection, with:
 
 `dotnet add package Simplyworks.CloudFiles.Extensions`
 
-Use the `--version` option to install. 
-
 # Getting Started 
 
 Add the *ICoudFilesService* interface (from [PrimitiveTypes](https://github.com/simplify9/primitivetypes)) in the constructor of a controller for it to be injected, then simply use the functions provided. 
