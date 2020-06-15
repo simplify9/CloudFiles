@@ -1,4 +1,4 @@
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT) 
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)  ![Contributions welcome](https://img.shields.io/badge/contributions-welcome-orange.svg)
 ## Introduction 
 *CloudFiles* is a minimalist library that abstracts the [Amazon S3](https://aws.amazon.com/s3/) SDK. It has the core needed from a file-uploading library without the hassle of going through mountains of documentation.
 
