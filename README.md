@@ -1,9 +1,9 @@
-# Introduction 
+## Introduction 
 *CloudFiles* is a minimalist library that abstracts the [Amazon S3](https://aws.amazon.com/s3/) SDK. It has the core needed from a file-uploading library without the hassle of going through mountains of documentation.
 
 *CloudFiles* has extensions to integrate it into the ASP dotnet core dependency injection. It covers multiple ways to upload data, including opening writable streams or simply uploading a file's data from [IFormFile](https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.http.iformfile?view=aspnetcore-3.1) or similar.
 
-# Installation
+## Installation
 There are two  [NuGet](https://www.nuget.org/packages/SimplyWorks.CloudFiles/) packages for Cloudfiles, one for being the actual service, installed with:
 
 `dotnet add package Simplyworks.CloudFiles`
@@ -12,13 +12,13 @@ While the other is used to integrate it into the dependency injection, with:
 
 `dotnet add package Simplyworks.CloudFiles.Extensions`
 
-# Getting Started 
+## Getting Started 
 
 Add the *ICoudFilesService* interface (from [PrimitiveTypes](https://github.com/simplify9/primitivetypes)) in the constructor of a controller for it to be injected, then simply use the functions provided. 
 
-# Examples
+## Examples
 
-## Reading from Cloud bucket example:
+### Reading from Cloud bucket example:
 
 We initialize this function with its corresponding primitive type, and it then reads a file from the bucket and writes it onto the local disk. 
 
@@ -32,7 +32,7 @@ We initialize this function with its corresponding primitive type, and it then r
             await stream.CopyToAsync(diskFile);
         }
 ```
-## CloudFiles used in an ASP Controller endpoint:
+### CloudFiles used in an ASP Controller endpoint:
 
 ```C#
 [HttpPost]
@@ -55,7 +55,7 @@ public async Task<IActionResult> UploadBlobToCloud([FromRoute]string directory, 
 }
 ```
 
-# Getting support 👷
+## Getting support 👷
 If you encounter any bugs, don't hesitate to submit an [issue](https://github.com/simplify9/CloudFiles/issues). We'll get back to you promptly! 
 
 
