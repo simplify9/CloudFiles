@@ -1,5 +1,4 @@
 
-https://img.shields.io/github/license/simplify9/cloudfiles 
 ## Introduction 
 *CloudFiles* is a minimalist library that abstracts the [Amazon S3](https://aws.amazon.com/s3/) SDK. It has the core needed from a file-uploading library without the hassle of going through mountains of documentation.
 
