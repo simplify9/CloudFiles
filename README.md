@@ -16,7 +16,23 @@ While the other is used to integrate it into the dependency injection, with:
 
 Add the *ICoudFilesService* interface (from [PrimitiveTypes](https://github.com/simplify9/primitivetypes)) in the constructor of a controller for it to be injected, then simply use the functions provided. 
 
-# Example
+# Examples
+
+## Reading from Cloud bucket example:
+
+We initialize this function with its corresponding primitive type, and it then reads a file from the bucket and writes it onto the local disk. 
+
+```[TestMethod]
+        async public Task TestOpenReadAcync()
+        {
+            var cloudFiles = server.Host.Services.GetService<ICloudFilesService>();
+
+            using var stream = await cloudFiles.OpenReadAsync("test/TestWriteAcync.txt");
+            using var diskFile = File.OpenWrite(@"c:\temp\sample.txt");
+            await stream.CopyToAsync(diskFile);
+        }
+```
+## CloudFiles used in an ASP Controller endpoint:
 
 ```C#
 [HttpPost]
@@ -38,6 +54,13 @@ public async Task<IActionResult> UploadBlobToCloud([FromRoute]string directory, 
         } throw new Exception("Invalid form file");
 }
 ```
+
+# Getting support 👷
+If you encounter any bugs, don't hesitate to submit an [issue](https://github.com/simplify9/CloudFiles/issues). We'll get back to you promptly! 
+
+
+
+
 
 
 
