@@ -34,14 +34,14 @@ Here's how to configure your details in the **AppSettings** file:
   The other way to register *Cloudfiles* is by using the **AddCloudFiles** function in your Startup file and to specify your parameters like so:
    ```csharp
    .AddCloudFiles( config =>
-                        config.AccessKeyId = ""
-                        config.SecretAccessKey = "";
-                        config.ServiceUrl = "";
-                        config.BucketName = "";
-                ) 
+            config.AccessKeyId = ""
+            config.SecretAccessKey = "";
+            config.ServiceUrl = "";
+            config.BucketName = "";
+                  ) 
 ```
 
-Simply add the *ICoudFilesService* interface (from [PrimitiveTypes](https://github.com/simplify9/primitivetypes)) in the constructor of a controller for it to be injected, then use the functions provided!
+Then simply add the *ICoudFilesService* interface (from [PrimitiveTypes](https://github.com/simplify9/primitivetypes)) in the constructor of a controller for it to be injected, then use the functions provided!
 
 ## Examples
 
