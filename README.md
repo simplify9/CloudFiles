@@ -38,7 +38,7 @@ Here's how to configure your details in the **AppSettings** file:
             config.SecretAccessKey = "";
             config.ServiceUrl = "";
             config.BucketName = "";
-                  ) 
+    ) 
 ```
 
 Then simply add the *ICoudFilesService* interface (from [PrimitiveTypes](https://github.com/simplify9/primitivetypes)) in the constructor of a controller for it to be injected, then use the functions provided!
