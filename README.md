@@ -18,8 +18,30 @@ While the other is used to integrate it into the dependency injection, with:
 `dotnet add package Simplyworks.CloudFiles.Extensions`
 
 ## Getting Started 
+There are two ways to register *Cloudfiles*. 
+You can configure your details in the **AppSettings.json** file and then call **.AddCloudFiles()** in your Startup file. 
+Here's how to configure your details in the **AppSettings** file:
 
-Add the *ICoudFilesService* interface (from [PrimitiveTypes](https://github.com/simplify9/primitivetypes)) in the constructor of a controller for it to be injected, then simply use the functions provided. 
+```json
+ "CloudFiles": {
+    "AccessKeyId": "",
+    "SecretAccessKey": "",
+    "BucketName": "",
+    "ServiceUrl": ""
+  }, 
+  ```
+  
+  The other way to register *Cloudfiles* is by using the **AddCloudFiles** function in your Startup file and to specify your parameters like so:
+   ```csharp
+   .AddCloudFiles( config =>
+                        config.AccessKeyId = ""
+                        config.SecretAccessKey = "";
+                        config.ServiceUrl = "";
+                        config.BucketName = "";
+                ) 
+```
+
+Simply add the *ICoudFilesService* interface (from [PrimitiveTypes](https://github.com/simplify9/primitivetypes)) in the constructor of a controller for it to be injected, then use the functions provided!
 
 ## Examples
 
@@ -28,14 +50,13 @@ Add the *ICoudFilesService* interface (from [PrimitiveTypes](https://github.com/
 We initialize this function with its corresponding primitive type, and it then reads a file from the bucket and writes it onto the local disk. 
 
 ``` C#
-[TestMethod]
-        async public Task TestOpenReadAcync()
-        {
-            var cloudFiles = server.Host.Services.GetService<ICloudFilesService>();
+    async public Task TestOpenReadAcync()
+    {
+        var cloudFiles = server.Host.Services.GetService<ICloudFilesService>();
 
-            using var stream = await cloudFiles.OpenReadAsync("test/TestWriteAcync.txt");
-            using var diskFile = File.OpenWrite(@"c:\temp\sample.txt");
-            await stream.CopyToAsync(diskFile);
+        using var stream = await cloudFiles.OpenReadAsync("test/TestWriteAcync.txt");
+        using var diskFile = File.OpenWrite(@"c:\temp\sample.txt");
+        await stream.CopyToAsync(diskFile);
         }
 ```
 ### CloudFiles used in an ASP Controller endpoint:
