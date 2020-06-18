@@ -31,7 +31,7 @@ Here's how:
     "ServiceUrl": ""
   }, 
   ```
-  Use the **AddCloudFiles** function in your Startup file and specify your parameters like so:
+  2. Use the **AddCloudFiles** function in your Startup file and specify your parameters like so:
 
    ```csharp
    .AddCloudFiles( config =>
