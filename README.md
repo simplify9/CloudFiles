@@ -18,9 +18,10 @@ While the other is used to integrate it into the dependency injection, with:
 `dotnet add package Simplyworks.CloudFiles.Extensions`
 
 ## Getting Started 
-There are two ways to register *Cloudfiles*. 
-You can configure your details in the **AppSettings.json** file and then call **.AddCloudFiles()** in your Startup file. 
-Here's how to configure your details in the **AppSettings** file:
+To register *Cloudfiles*, use the service collection extension method. Add *Cloudfiles* to your startup file and pass the configuration in one of these two ways:
+
+1. Configure your details in the **AppSettings.json** file and then call **.AddCloudFiles()** in your Startup file. 
+Here's how:
 
 ```json
  "CloudFiles": {
@@ -30,8 +31,8 @@ Here's how to configure your details in the **AppSettings** file:
     "ServiceUrl": ""
   }, 
   ```
-  
-  The other way to register *Cloudfiles* is by using the **AddCloudFiles** function in your Startup file and to specify your parameters like so:
+  Use the **AddCloudFiles** function in your Startup file and specify your parameters like so:
+
    ```csharp
    .AddCloudFiles( config =>
             config.AccessKeyId = ""
@@ -57,7 +58,7 @@ async public Task TestOpenReadAcync()
     using var stream = await cloudFiles.OpenReadAsync("test/TestWriteAcync.txt");
     using var diskFile = File.OpenWrite(@"c:\temp\sample.txt");
     await stream.CopyToAsync(diskFile);
-    }
+}
 ```
 ### CloudFiles used in an ASP Controller endpoint:
 
