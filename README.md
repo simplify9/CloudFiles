@@ -1,5 +1,8 @@
 ![Banner](https://i.imgur.com/k6cpqfM.png)
 
+| **Package**       | **Version** |
+| :----------------:|:----------------------:|
+| ``SimplyWorks.HttpExtensions``|![Nuget](https://img.shields.io/nuget/v/SimplyWorks.CloudFiles?style=for-the-badge)|
 
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)  ![Contributions welcome](https://img.shields.io/badge/contributions-welcome-orange.svg)
