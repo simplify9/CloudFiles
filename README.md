@@ -1,3 +1,8 @@
+| **Package**       | **Version** |
+| :----------------:|:----------------------:|
+| ``SimplyWorks.HttpExtensions``|![Nuget](https://img.shields.io/nuget/v/SimplyWorks.CloudFiles?style=for-the-badge)|
+
+
 ![Banner](https://i.imgur.com/k6cpqfM.png)
 
 
