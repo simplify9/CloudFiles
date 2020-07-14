@@ -16,7 +16,7 @@ namespace SW.CloudFiles
                 //RegionEndpoint = RegionEndpoint.
                 ServiceURL = cloudFilesOptions.ServiceUrl,
                 //HttpClientFactory = httpClientFactory
-
+                UseHttp = new Uri(cloudFilesOptions.ServiceUrl).Scheme.ToLower() == "http",
             };
 
             return new AmazonS3Client(cloudFilesOptions.AccessKeyId, cloudFilesOptions.SecretAccessKey, clientConfig);
