@@ -17,6 +17,8 @@ namespace SW.CloudFiles
                 ServiceURL = cloudFilesOptions.ServiceUrl,
                 //HttpClientFactory = httpClientFactory
                 UseHttp = new Uri(cloudFilesOptions.ServiceUrl).Scheme.ToLower() == "http",
+                AllowAutoRedirect = true,
+                
             };
 
             return new AmazonS3Client(cloudFilesOptions.AccessKeyId, cloudFilesOptions.SecretAccessKey, clientConfig);
