@@ -1,4 +1,5 @@
 ﻿using Amazon.S3;
+using Amazon;
 using SW.PrimitiveTypes;
 using System;
 using System.Collections.Generic;
@@ -13,11 +14,10 @@ namespace SW.CloudFiles
 
             var clientConfig = new AmazonS3Config
             {
-                //RegionEndpoint = RegionEndpoint.
+                RegionEndpoint = RegionEndpoint.USEast1,
                 ServiceURL = cloudFilesOptions.ServiceUrl,
-                //HttpClientFactory = httpClientFactory
                 UseHttp = new Uri(cloudFilesOptions.ServiceUrl).Scheme.ToLower() == "http",
-                AllowAutoRedirect = true,
+                ForcePathStyle = true
                 
             };
 
