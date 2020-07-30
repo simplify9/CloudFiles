@@ -4,15 +4,19 @@ trigger:
 - master
 
 pool:
-  major: 2
-  minor: 0
-  version: $[format('{0}.{1}.{2}', variables['major'], variables['minor'], counter(format('{0}.{1}', variables['major'], variables['minor']), 0))]
   vmImage: 'ubuntu-latest'
 
 variables:
   - group: S3Bucket
   - name: buildConfiguration
     value: 'Release'
+  - name: major
+    value: 2
+  - name: minor
+    value: 0
+  - name: version
+    value: $[format('{0}.{1}.{2}', variables['major'], variables['minor'], counter(format('{0}.{1}', variables['major'], variables['minor']), 0))]
+
 
 steps:
 
