@@ -15,7 +15,7 @@
 
   <ItemGroup>
     <PackageReference Include="AWSSDK.S3" Version="3.3.110.56" />
-    <PackageReference Include="SimplyWorks.PrimitiveTypes" Version="2020.4.24.1" />
+    <PackageReference Include="SimplyWorks.PrimitiveTypes" Version="2.0.4" />
   </ItemGroup>
   <ItemGroup>
     <None Include="../icon.png">
