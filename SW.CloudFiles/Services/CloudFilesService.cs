@@ -36,7 +36,7 @@ namespace SW.CloudFiles
             {
                 Key = settings.Key,
                 CannedACL = settings.Public ? S3CannedACL.PublicRead : S3CannedACL.Private,
-                ContentType = settings.ContentType,
+                ContentType = settings.ContentType ?? "application/octet-stream",
                 InputStream = inputStream,
                 AutoCloseStream = settings.CloseInputStream,
                 BucketName = cloudFilesOptions.BucketName,
@@ -66,7 +66,7 @@ namespace SW.CloudFiles
                 CannedACL = settings.Public ? S3CannedACL.PublicRead : S3CannedACL.Private,
                 ContentBody = text,
                 BucketName = cloudFilesOptions.BucketName,
-
+                ContentType = settings.ContentType ?? "text/plain"
             };
 
             await client.PutObjectAsync(request);
@@ -117,7 +117,7 @@ namespace SW.CloudFiles
             {
                 BucketName = cloudFilesOptions.BucketName,
                 Key = settings.Key,
-                ContentType = settings.ContentType,
+                ContentType = settings.ContentType ?? "application/octet-stream",
                 Expires = DateTime.UtcNow.AddHours(1),
                 Verb = HttpVerb.PUT,
                 
@@ -129,7 +129,7 @@ namespace SW.CloudFiles
             var url = client.GetPreSignedURL(request);
 
             HttpWebRequest httpWebRequest = WebRequest.Create(url) as HttpWebRequest;
-            httpWebRequest.ContentType = settings.ContentType;
+            httpWebRequest.ContentType = settings.ContentType ?? "application/octet-stream";
             if (settings.Public)
                 httpWebRequest.Headers.Add("x-amz-acl", "public-read");
 
@@ -212,7 +212,7 @@ namespace SW.CloudFiles
                     Key = entry.Key,
                     Size = entry.Size,
                     Signature = entry.ETag
-
+                    
                 });
             }
 
