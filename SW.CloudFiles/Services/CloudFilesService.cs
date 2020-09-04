@@ -93,6 +93,25 @@ namespace SW.CloudFiles
             return client.GetPreSignedURL(request);
         }
 
+
+        /// <summary>
+        /// Deletes object.
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns>True if delete was successful, false if it wasn't.</returns>
+        public async Task<bool> DeleteAsync(string key)
+        {
+            var request = new DeleteObjectRequest
+            {
+                BucketName = cloudFilesOptions.BucketName,
+                Key = key,
+            };
+
+            var rs = await client.DeleteObjectAsync(request);
+            if (rs.HttpStatusCode == HttpStatusCode.NoContent) return true;
+            else return false;
+        }
+
         public string GetUrl(string key)
         {
             var request = new GetPreSignedUrlRequest
