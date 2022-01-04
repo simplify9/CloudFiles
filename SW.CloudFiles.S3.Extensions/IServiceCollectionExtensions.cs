@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using SW.CloudFiles.S3;
 
 namespace SW.CloudFiles.Extensions
 {

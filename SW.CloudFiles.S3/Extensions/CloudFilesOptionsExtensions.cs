@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SW.CloudFiles
+namespace SW.CloudFiles.S3
 {
     public static class CloudFilesOptionsExtensions
     {

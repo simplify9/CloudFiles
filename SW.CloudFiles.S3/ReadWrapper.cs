@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace SW.CloudFiles
+namespace SW.CloudFiles.S3
 {
     internal class ReadWrapper : IDisposable
     {

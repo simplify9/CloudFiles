@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SW.CloudFiles.Extensions\SW.CloudFiles.Extensions.csproj" />
+    <ProjectReference Include="..\SW.CloudFiles.S3.Extensions\SW.CloudFiles.S3.Extensions.csproj" />
   </ItemGroup>
 
   <ItemGroup>

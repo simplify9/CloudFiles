@@ -11,7 +11,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SW.CloudFiles
+namespace SW.CloudFiles.S3
 {
     public class CloudFilesService : IDisposable, ICloudFilesService
     {
