@@ -1,7 +1,7 @@
 name: $(version)
 
 trigger:
-- master
+- muhannad/azure_blobs_support
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -56,15 +56,15 @@ steps:
 
 - task: DotNetCoreCLI@2
   displayName: 'dotnet pack'
-  condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
+  condition: eq(variables['Build.SourceBranch'], 'refs/heads/muhannad/azure_blobs_support')
   inputs:
     command: pack
-    packagesToPack: 'SW.CloudFiles/SW.CloudFiles.csproj;SW.CloudFiles.Extensions/SW.CloudFiles.Extensions.csproj;'
+    packagesToPack: 'SW.CloudFiles.S3/SW.CloudFiles.S3.csproj;SW.CloudFiles.S3.Extensions/SW.CloudFiles.S3.Extensions.csproj;SW.CloudFiles.AS/SW.CloudFiles.AS.csproj;SW.CloudFiles.AS.Extensions/SW.CloudFiles.AS.Extensions.csproj;'
     nobuild: true
     versioningScheme: byBuildNumber
 
 - task: NuGetCommand@2
-  condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
+  condition: eq(variables['Build.SourceBranch'], 'refs/heads/muhannad/azure_blobs_support')
   inputs:
     command: 'push'
     packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
