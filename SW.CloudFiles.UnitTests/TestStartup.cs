@@ -33,7 +33,7 @@ namespace SW.CloudFiles.UnitTests
             //    config.ServiceUrl = "https://fra1.digitaloceanspaces.com";
             //    config.BucketName = "sf9";
             //});
-            services.AddCloudFiles();
+            services.AddS3CloudFiles();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

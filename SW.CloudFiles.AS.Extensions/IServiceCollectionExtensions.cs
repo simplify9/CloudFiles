@@ -12,7 +12,7 @@ namespace SW.CloudFiles.AS.Extensions
 {
     public static class IServiceCollectionExtensions
     {
-        public static IServiceCollection AddCloudFiles(this IServiceCollection serviceCollection, Action<CloudFilesOptions> configure = null)
+        public static IServiceCollection AddAsCloudFiles(this IServiceCollection serviceCollection, Action<CloudFilesOptions> configure = null)
         {
             var cloudFilesOptions = new CloudFilesOptions();
             if (configure != null) configure.Invoke(cloudFilesOptions);

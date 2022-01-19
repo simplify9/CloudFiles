@@ -31,7 +31,7 @@ namespace SW.CloudFiles.Extensions
         /// <param name="serviceCollection"></param>
         /// <param name="configure"></param>
         /// <returns></returns>
-        public static IServiceCollection AddCloudFiles(this IServiceCollection serviceCollection, Action<CloudFilesOptions> configure = null)
+        public static IServiceCollection AddS3CloudFiles(this IServiceCollection serviceCollection, Action<CloudFilesOptions> configure = null)
         {
             var cloudFilesOptions = new CloudFilesOptions();
             if (configure != null) configure.Invoke(cloudFilesOptions);
