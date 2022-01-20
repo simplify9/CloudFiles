@@ -10,7 +10,7 @@ using SW.PrimitiveTypes;
 
 namespace SW.CloudFiles.AS
 {
-    public class CloudFilesService: ICloudFilesService
+    public class CloudFilesService : ICloudFilesService
     {
         private readonly BlobContainerClient blobContainerClient;
 
@@ -23,12 +23,15 @@ namespace SW.CloudFiles.AS
         {
             var blobClient = blobContainerClient.GetBlobClient(settings.Key);
 
-            
+
             await blobClient.UploadAsync(inputStream, new BlobUploadOptions
             {
                 Metadata = settings.Metadata ?? new Dictionary<string, string>(),
-                HttpHeaders = new BlobHttpHeaders { ContentType = settings.ContentType ?? 
-                                                                  "application/octet-stream" }
+                HttpHeaders = new BlobHttpHeaders
+                {
+                    ContentType = settings.ContentType ??
+                                  "application/octet-stream"
+                }
             });
 
             return new RemoteBlob
@@ -36,23 +39,28 @@ namespace SW.CloudFiles.AS
                 Location = $"{blobContainerClient.Uri}/{settings.Key}",
                 Name = settings.Key,
                 MimeType = settings.ContentType,
-                Size = (int)inputStream.Length
+                Size = (int) inputStream.Length
             };
         }
 
         public async Task<RemoteBlob> WriteTextAsync(string text, WriteFileSettings settings)
-        { 
+        {
             var blobClient = blobContainerClient.GetBlobClient(settings.Key);
+
 
             var content = Encoding.UTF8.GetBytes(text);
             await using var ms = new MemoryStream(content);
+            var contentType = settings.ContentType ?? "text/plain";
+            await blobClient.UploadAsync(ms, new BlobHttpHeaders
+            {
+                ContentType = contentType
+            }, settings.Metadata);
 
-            await blobClient.UploadAsync(ms, null, settings.Metadata);
             return new RemoteBlob
             {
                 Location = $"{blobContainerClient.Uri}/{settings.Key}",
                 Name = settings.Key,
-                MimeType = settings.ContentType
+                MimeType = contentType
             };
         }
 
@@ -73,19 +81,19 @@ namespace SW.CloudFiles.AS
             var blob = blobContainerClient.GetBlobClient(key);
 
             var result = await blob.DownloadAsync();
-            
+
             return result.Value.Content;
-            
         }
 
         public async Task<IEnumerable<CloudFileInfo>> ListAsync(string prefix)
         {
             var blobHierarchyItems =
-                blobContainerClient.GetBlobsByHierarchyAsync(BlobTraits.None, BlobStates.None, $"/{prefix}");
+                blobContainerClient.GetBlobsByHierarchyAsync(BlobTraits.None, BlobStates.None, null, $"{prefix}");
 
             var files = new List<CloudFileInfo>();
 
             await foreach (var blobHierarchyItem in blobHierarchyItems)
+            {
                 if (!blobHierarchyItem.IsPrefix)
                     files.Add(new CloudFileInfo
                     {
@@ -93,6 +101,7 @@ namespace SW.CloudFiles.AS
                         Signature = blobHierarchyItem.Blob.Properties.ETag?.ToString(),
                         Size = blobHierarchyItem.Blob.Properties.ContentLength ?? 0
                     });
+            }
 
             return files;
         }
@@ -100,7 +109,7 @@ namespace SW.CloudFiles.AS
         public async Task<IReadOnlyDictionary<string, string>> GetMetadataAsync(string key)
         {
             var blob = blobContainerClient.GetBlobClient(key);
-            var properties= await blob.GetPropertiesAsync();
+            var properties = await blob.GetPropertiesAsync();
             return new ReadOnlyDictionary<string, string>(properties.Value.Metadata);
         }
 
@@ -109,7 +118,6 @@ namespace SW.CloudFiles.AS
             var blob = blobContainerClient.GetBlobClient(key);
             await blob.DeleteAsync(DeleteSnapshotsOption.IncludeSnapshots);
             return true;
-
         }
     }
 }
