@@ -110,7 +110,15 @@ namespace SW.CloudFiles.AS
         {
             var blob = blobContainerClient.GetBlobClient(key);
             var properties = await blob.GetPropertiesAsync();
-            return new ReadOnlyDictionary<string, string>(properties.Value.Metadata);
+            var data = new Dictionary<string, string>(properties.Value.Metadata)
+            {
+                {"ContentType", properties.Value.ContentType},
+                {"ContentLength", properties.Value.ContentLength.ToString()},
+                {"Hash", properties.Value.ETag.ToString().Replace("\"", "")}
+            };
+
+
+            return data;
         }
 
         public async Task<bool> DeleteAsync(string key)

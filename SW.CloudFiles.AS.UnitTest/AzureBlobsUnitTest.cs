@@ -141,7 +141,6 @@ namespace SW.CloudFiles.UnitTests
                 Public = true,
                 Metadata = new Dictionary<string, string>
                 {
-                    ["Hash"] = "31113131",
                     ["EntryAssembly"] = "Asm"
                 }
             });
@@ -155,7 +154,7 @@ namespace SW.CloudFiles.UnitTests
             var cloudFiles = server.Host.Services.GetService<ICloudFilesService>();
 
             var metadata =
-                await cloudFiles.GetMetadataAsync("test/metadata");
+                await cloudFiles.GetMetadataAsync("adapters/infolink5.handlers.http");
 
             Assert.AreNotEqual(metadata.Count, 0);
             Assert.IsNotNull(metadata["EntryAssembly"]);
