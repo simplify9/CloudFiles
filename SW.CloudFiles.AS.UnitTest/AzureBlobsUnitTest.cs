@@ -7,6 +7,7 @@ using SW.PrimitiveTypes;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using SW.CloudFiles.AS.UnitTest;
 
@@ -116,7 +117,8 @@ namespace SW.CloudFiles.UnitTests
         {
             var cloudFiles = server.Host.Services.GetService<ICloudFilesService>();
 
-            var result = await cloudFiles.ListAsync("test");
+            var result = (await cloudFiles.ListAsync("test")).ToArray();
+            Assert.AreNotEqual(0, result.Length);
         }
 
 
