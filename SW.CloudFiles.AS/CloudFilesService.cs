@@ -110,15 +110,21 @@ namespace SW.CloudFiles.AS
         {
             var blob = blobContainerClient.GetBlobClient(key);
             var properties = await blob.GetPropertiesAsync();
-            var data = new Dictionary<string, string>(properties.Value.Metadata)
-            {
-                {"ContentLength", properties.Value.ContentLength.ToString()},
-                {"Hash", properties.Value.ETag.ToString().Replace("\"", "")}
-            };
+            var data = new Dictionary<string, string>(properties.Value.Metadata);
 
             if (!data.TryGetValue("ContentType", out var _))
             {
                 data.Add("ContentType", properties.Value.ContentType);
+            }
+
+            if (!data.TryGetValue("Hash", out var _))
+            {
+                data.Add("Hash", properties.Value.ETag.ToString().Replace("\"", ""));
+            }
+
+            if (!data.TryGetValue("ContentLength", out var _))
+            {
+                data.Add("ContentLength", properties.Value.ContentLength.ToString());
             }
 
 

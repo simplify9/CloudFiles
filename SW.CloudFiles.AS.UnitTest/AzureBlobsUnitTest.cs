@@ -64,6 +64,7 @@ namespace SW.CloudFiles.UnitTests
             Assert.IsNotNull(rb.Location);
         }
 
+
         [TestMethod]
         public async Task TestWriteAsync()
         {
@@ -150,6 +151,7 @@ namespace SW.CloudFiles.UnitTests
             Assert.IsNotNull(rb.Location);
         }
 
+
         [TestMethod]
         public async Task TestGetMetadata()
         {
@@ -161,6 +163,24 @@ namespace SW.CloudFiles.UnitTests
             Assert.AreNotEqual(metadata.Count, 0);
             Assert.IsNotNull(metadata["EntryAssembly"]);
             Assert.IsNotNull(metadata["Hash"]);
+        }
+
+        [TestMethod]
+        public async Task TestGetMetadataBulk()
+        {
+            var cloudFiles = server.Host.Services.GetService<ICloudFilesService>();
+
+            var list = await cloudFiles.ListAsync("adapters/infolink5.");
+            foreach (var item in list)
+            {
+                var metadata =
+                    await cloudFiles.GetMetadataAsync(item.Key);
+
+
+                Assert.AreNotEqual(0, metadata.Count);
+                Assert.IsNotNull(metadata["EntryAssembly"]);
+                Assert.IsNotNull(metadata["Hash"]);
+            }
         }
         // [TestMethod]
         // public void TestGetSignedUrl()
