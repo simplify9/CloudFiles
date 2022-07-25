@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <PackageId>SimplyWorks.CloudFiles.Extensions</PackageId>
-    <Product>SimplyWorks.CloudFiles.Extensions</Product>
+    <PackageId>SimplyWorks.CloudFiles.S3.Extensions</PackageId>
+    <Product>SimplyWorks.CloudFiles.S3.Extensions</Product>
     <Authors>Simplify9</Authors>
     <Copyright>Simplify9</Copyright>
     <Company>Simplify9</Company>
@@ -11,6 +11,7 @@
     <PackageProjectUrl>https://github.com/simplify9/CloudFiles</PackageProjectUrl>
     <RepositoryUrl>https://github.com/simplify9/CloudFiles</RepositoryUrl>
     <PackageIcon>icon.png</PackageIcon>
+    <RootNamespace>SW.CloudFiles.Extensions</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,7 +23,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\SW.CloudFiles\SW.CloudFiles.csproj" />
+    <ProjectReference Include="..\SW.CloudFiles.S3\SW.CloudFiles.S3.csproj" />
   </ItemGroup>
 
   <ItemGroup>

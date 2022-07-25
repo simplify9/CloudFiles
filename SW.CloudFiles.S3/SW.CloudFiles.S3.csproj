@@ -2,11 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
-    <PackageId>SimplyWorks.CloudFiles</PackageId>
+    <PackageId>SimplyWorks.CloudFiles.S3</PackageId>
     <Copyright>Simplify9</Copyright>
     <Company>Simplify9</Company>
     <Authors>Simplify9</Authors>
-    <Product>SimplyWorks.CloudFiles</Product>
+    <Product>SimplyWorks.CloudFiles.S3</Product>
     <PackageLicenseExpression>MIT</PackageLicenseExpression> 
     <PackageProjectUrl>https://github.com/simplify9/CloudFiles</PackageProjectUrl>
     <RepositoryUrl>https://github.com/simplify9/CloudFiles</RepositoryUrl>
