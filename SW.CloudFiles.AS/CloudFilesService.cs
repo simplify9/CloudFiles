@@ -10,7 +10,7 @@ using SW.PrimitiveTypes;
 
 namespace SW.CloudFiles.AS
 {
-    public class CloudFilesService : ICloudFilesService
+    public class CloudFilesService :IDisposable, ICloudFilesService
     {
         private readonly BlobContainerClient blobContainerClient;
 
@@ -136,6 +136,11 @@ namespace SW.CloudFiles.AS
             var blob = blobContainerClient.GetBlobClient(key);
             await blob.DeleteAsync(DeleteSnapshotsOption.IncludeSnapshots);
             return true;
+        }
+
+        public void Dispose()
+        {
+            
         }
     }
 }
