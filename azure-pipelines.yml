@@ -1,7 +1,7 @@
 name: $(version)
 
 trigger:
-- muhannad/azure_blobs_support
+- master
 
 pool:
   vmImage: 'ubuntu-latest'
