@@ -56,7 +56,7 @@ steps:
 
 - task: DotNetCoreCLI@2
   displayName: 'dotnet pack'
-  condition: eq(variables['Build.SourceBranch'], 'refs/heads/muhannad/azure_blobs_support')
+  condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
   inputs:
     command: pack
     packagesToPack: 'SW.CloudFiles.S3/SW.CloudFiles.S3.csproj;SW.CloudFiles.S3.Extensions/SW.CloudFiles.S3.Extensions.csproj;SW.CloudFiles.AS/SW.CloudFiles.AS.csproj;SW.CloudFiles.AS.Extensions/SW.CloudFiles.AS.Extensions.csproj;'
@@ -64,7 +64,7 @@ steps:
     versioningScheme: byBuildNumber
 
 - task: NuGetCommand@2
-  condition: eq(variables['Build.SourceBranch'], 'refs/heads/muhannad/azure_blobs_support')
+  condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
   inputs:
     command: 'push'
     packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
