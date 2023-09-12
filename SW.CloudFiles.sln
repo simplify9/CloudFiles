@@ -15,6 +15,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SW.CloudFiles.AS.Extensions
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SW.CloudFiles.AS.UnitTest", "SW.CloudFiles.AS.UnitTest\SW.CloudFiles.AS.UnitTest.csproj", "{1DA09E4B-1F36-4A08-90BF-561DA0C9AEF3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SW.CloudFiles.OC", "SW.CloudFiles.OC\SW.CloudFiles.OC.csproj", "{7F9EF979-2525-4CC5-B989-F1545C83B632}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SW.CloudFiles.OC.Extensions", "SW.CloudFiles.OC.Extensions\SW.CloudFiles.OC.Extensions.csproj", "{97EADC85-BDD2-47EB-AD05-236479930355}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +49,14 @@ Global
 		{1DA09E4B-1F36-4A08-90BF-561DA0C9AEF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1DA09E4B-1F36-4A08-90BF-561DA0C9AEF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1DA09E4B-1F36-4A08-90BF-561DA0C9AEF3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F9EF979-2525-4CC5-B989-F1545C83B632}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F9EF979-2525-4CC5-B989-F1545C83B632}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F9EF979-2525-4CC5-B989-F1545C83B632}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F9EF979-2525-4CC5-B989-F1545C83B632}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97EADC85-BDD2-47EB-AD05-236479930355}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97EADC85-BDD2-47EB-AD05-236479930355}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97EADC85-BDD2-47EB-AD05-236479930355}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97EADC85-BDD2-47EB-AD05-236479930355}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
