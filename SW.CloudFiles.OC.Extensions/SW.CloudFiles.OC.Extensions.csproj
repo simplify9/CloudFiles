@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>disable</Nullable>
+        <PackageId>SimplyWorks.CloudFiles.OC.Extensions</PackageId>
+        <Product>SimplyWorks.CloudFiles.OC.Extensions</Product>
+        <Authors>Simplify9</Authors>
+        <Copyright>Simplify9</Copyright>
+        <Company>Simplify9</Company>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageProjectUrl>https://github.com/simplify9/CloudFiles</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/simplify9/CloudFiles</RepositoryUrl>
+        <PackageIcon>icon.png</PackageIcon>
+        <RootNamespace>SW.CloudFiles.Extensions</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    </ItemGroup>
+
+
+    <ItemGroup>
+      <ProjectReference Include="..\SW.CloudFiles.OC\SW.CloudFiles.OC.csproj" />
+    </ItemGroup>
+
+</Project>
