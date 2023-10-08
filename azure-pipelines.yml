@@ -59,7 +59,7 @@ steps:
   condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
   inputs:
     command: pack
-    packagesToPack: 'SW.CloudFiles.S3/SW.CloudFiles.S3.csproj;SW.CloudFiles.S3.Extensions/SW.CloudFiles.S3.Extensions.csproj;SW.CloudFiles.AS/SW.CloudFiles.AS.csproj;SW.CloudFiles.AS/SW.CloudFiles.OC.csproj;SW.CloudFiles.AS.Extensions/SW.CloudFiles.AS.Extensions.csproj;SW.CloudFiles.OC.Extensions/SW.CloudFiles.OC.Extensions.csproj'
+    packagesToPack: 'SW.CloudFiles.S3/SW.CloudFiles.S3.csproj;SW.CloudFiles.S3.Extensions/SW.CloudFiles.S3.Extensions.csproj;SW.CloudFiles.AS/SW.CloudFiles.AS.csproj;SW.CloudFiles.OC/SW.CloudFiles.OC.csproj;SW.CloudFiles.AS.Extensions/SW.CloudFiles.AS.Extensions.csproj;SW.CloudFiles.OC.Extensions/SW.CloudFiles.OC.Extensions.csproj'
     nobuild: true
     versioningScheme: byBuildNumber
 
