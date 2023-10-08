@@ -6,7 +6,7 @@
         <Copyright>Simplify9</Copyright>
         <Company>Simplify9</Company>
         <Authors>Simplify9</Authors>
-        <Product>SimplyWorks.CloudFiles.S3</Product>
+        <Product>SimplyWorks.CloudFiles.OC</Product>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageProjectUrl>https://github.com/simplify9/CloudFiles</PackageProjectUrl>
         <RepositoryUrl>https://github.com/simplify9/CloudFiles</RepositoryUrl>
