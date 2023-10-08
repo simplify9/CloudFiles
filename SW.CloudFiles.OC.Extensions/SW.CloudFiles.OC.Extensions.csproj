@@ -23,4 +23,10 @@
       <ProjectReference Include="..\SW.CloudFiles.OC\SW.CloudFiles.OC.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+        <None Include="../icon.png">
+            <Pack>True</Pack>
+            <PackagePath></PackagePath>
+        </None>
+    </ItemGroup>
 </Project>
