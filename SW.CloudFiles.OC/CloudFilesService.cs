@@ -13,20 +13,6 @@ using SW.PrimitiveTypes;
 
 namespace SW.CloudFiles.OC
 {
-    public class OracleCloudFilesOptions : CloudFilesOptions
-    {
-        public string TenantId { get; set; }
-            
-
-        public string FingerPrint { get; set; }
-        public string UserId { get; set; }
-
-        public string RSAKey { get; set; }
-        public string ConfigPath { get; set; }
-        public string Region { get; set; } = "me-dubai-1";
-        public string NamespaceName { get; set; } = "axdz0mmf49qx";
-    }
-
     public class CloudFilesService : ICloudFilesService, IDisposable
     {
     
@@ -41,7 +27,7 @@ namespace SW.CloudFiles.OC
             this.logger = logger;
             var provider = new ConfigFileAuthenticationDetailsProvider(this.cloudFilesOptions.ConfigPath, "DEFAULT");
             client = new ObjectStorageClient(provider);
-
+            
             uploadManager = new UploadManager(client, new UploadConfiguration());
         }
 
@@ -58,10 +44,12 @@ namespace SW.CloudFiles.OC
                 OpcMeta = metadata,
                 PutObjectBody = inputStream,
             };
-            var response = await uploadManager.Upload(new UploadManager.UploadRequest(request) { AllowOverwrite = true });
+            
+            await uploadManager.Upload(new UploadManager.UploadRequest(request) { AllowOverwrite = true });
+            
             return new RemoteBlob
             {
-                Location = "",
+                Location = cloudFilesOptions.GetFileUrl(settings.Key),
                 MimeType = mimeType
             };
         }
@@ -81,10 +69,10 @@ namespace SW.CloudFiles.OC
                 OpcMeta = metadata,
                 PutObjectBody = stream,
             };
-            var response = await uploadManager.Upload(new UploadManager.UploadRequest(request) { AllowOverwrite = true });
+            await uploadManager.Upload(new UploadManager.UploadRequest(request) { AllowOverwrite = true });
             return new RemoteBlob
             {
-                Location = "",
+                Location = cloudFilesOptions.GetFileUrl(settings.Key),
                 MimeType = mimeType
             };
         }
@@ -94,10 +82,7 @@ namespace SW.CloudFiles.OC
             throw new NotImplementedException();
         }
 
-        public string GetUrl(string key)
-        {
-            throw new NotImplementedException();
-        }
+        public string GetUrl(string key) => cloudFilesOptions.GetFileUrl(key);
 
         public WriteWrapper OpenWrite(WriteFileSettings settings)
         {
@@ -168,9 +153,7 @@ namespace SW.CloudFiles.OC
         
         }
 
-        public void Dispose()
-        {
-            client?.Dispose();
-        }
+        public void Dispose() =>client?.Dispose();
+        
     }
 }
