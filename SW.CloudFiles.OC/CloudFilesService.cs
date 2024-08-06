@@ -15,7 +15,6 @@ namespace SW.CloudFiles.OC
 {
     public class CloudFilesService : ICloudFilesService, IDisposable
     {
-    
         private readonly OracleCloudFilesOptions cloudFilesOptions;
         private readonly UploadManager uploadManager;
         private readonly ObjectStorageClient client;
@@ -27,7 +26,7 @@ namespace SW.CloudFiles.OC
             this.logger = logger;
             var provider = new ConfigFileAuthenticationDetailsProvider(this.cloudFilesOptions.ConfigPath, "DEFAULT");
             client = new ObjectStorageClient(provider);
-            
+
             uploadManager = new UploadManager(client, new UploadConfiguration());
         }
 
@@ -44,9 +43,9 @@ namespace SW.CloudFiles.OC
                 OpcMeta = metadata,
                 PutObjectBody = inputStream,
             };
-            
+
             await uploadManager.Upload(new UploadManager.UploadRequest(request) { AllowOverwrite = true });
-            
+
             return new RemoteBlob
             {
                 Location = cloudFilesOptions.GetFileUrl(settings.Key),
@@ -110,7 +109,7 @@ namespace SW.CloudFiles.OC
                 Prefix = prefix,
                 Fields = "size"
             });
-        
+
             return response.ListObjects.Objects.Select(x => new CloudFileInfo
             {
                 Key = x.Name,
@@ -120,15 +119,23 @@ namespace SW.CloudFiles.OC
 
         public async Task<IReadOnlyDictionary<string, string>> GetMetadataAsync(string key)
         {
-        
             var headObject = await client.HeadObject(new HeadObjectRequest()
             {
                 BucketName = cloudFilesOptions.BucketName,
                 NamespaceName = cloudFilesOptions.NamespaceName,
                 ObjectName = key
             });
-        
-            var result = new Dictionary<string, string>(headObject.OpcMeta);
+
+
+            var result = new Dictionary<string, string>();
+            if (headObject.OpcMeta != null)
+            {
+                foreach (var kvp in headObject.OpcMeta)
+                {
+                    result[kvp.Key] = kvp.Value;
+                }
+            }
+
             result.TryAdd("ContentType", headObject.ContentType);
             return result;
         }
@@ -150,10 +157,8 @@ namespace SW.CloudFiles.OC
                 logger.LogError(e, "Failed to delete file");
                 return false;
             }
-        
         }
 
-        public void Dispose() =>client?.Dispose();
-        
+        public void Dispose() => client?.Dispose();
     }
 }
