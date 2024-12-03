@@ -116,7 +116,6 @@ namespace SW.CloudFiles.OC
                 Size = x.Size ?? 0,
             });
         }
-
         public async Task<IReadOnlyDictionary<string, string>> GetMetadataAsync(string key)
         {
             var headObject = await client.HeadObject(new HeadObjectRequest()
@@ -125,9 +124,9 @@ namespace SW.CloudFiles.OC
                 NamespaceName = cloudFilesOptions.NamespaceName,
                 ObjectName = key
             });
-
-
-            var result = new Dictionary<string, string>();
+ 
+ 
+            var result = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
             if (headObject.OpcMeta != null)
             {
                 foreach (var kvp in headObject.OpcMeta)
@@ -135,7 +134,7 @@ namespace SW.CloudFiles.OC
                     result[kvp.Key] = kvp.Value;
                 }
             }
-
+            result.TryAdd("Hash", headObject.ETag);
             result.TryAdd("ContentType", headObject.ContentType);
             return result;
         }
