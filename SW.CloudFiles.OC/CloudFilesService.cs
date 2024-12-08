@@ -67,6 +67,7 @@ namespace SW.CloudFiles.OC
                 ObjectName = settings.Key,
                 OpcMeta = metadata,
                 PutObjectBody = stream,
+                NamespaceName = cloudFilesOptions.NamespaceName
             };
             await uploadManager.Upload(new UploadManager.UploadRequest(request) { AllowOverwrite = true });
             return new RemoteBlob
