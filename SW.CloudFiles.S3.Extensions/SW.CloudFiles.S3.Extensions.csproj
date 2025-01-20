@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <PackageId>SimplyWorks.CloudFiles.S3.Extensions</PackageId>
     <Product>SimplyWorks.CloudFiles.S3.Extensions</Product>
     <Authors>Simplify9</Authors>

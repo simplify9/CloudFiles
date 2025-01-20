@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <PackageId>SimplyWorks.CloudFiles.S3</PackageId>
     <Copyright>Simplify9</Copyright>
     <Company>Simplify9</Company>
@@ -14,8 +14,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AWSSDK.S3" Version="3.7.3.17" />
-    <PackageReference Include="SimplyWorks.PrimitiveTypes" Version="2.0.112" />
+    <PackageReference Include="AWSSDK.S3" Version="3.7.412.2" />
+    <PackageReference Include="SimplyWorks.PrimitiveTypes" Version="8.0.0" />
   </ItemGroup>
   <ItemGroup>
     <None Include="../icon.png">

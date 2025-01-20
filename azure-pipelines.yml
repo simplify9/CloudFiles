@@ -11,7 +11,7 @@ variables:
   - name: buildConfiguration
     value: 'Release'
   - name: major
-    value: 5
+    value: 8
   - name: minor
     value: 0
   - name: version
