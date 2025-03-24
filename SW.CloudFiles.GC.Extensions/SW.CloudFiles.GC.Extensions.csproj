@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <PackageId>SimplyWorks.CloudFiles.GC.Extensions</PackageId>
+        <Product>SimplyWorks.CloudFiles.GC.Extensions</Product>
+        <Authors>Simplify9</Authors>
+        <Copyright>Simplify9</Copyright>
+        <Company>Simplify9</Company>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageProjectUrl>https://github.com/simplify9/CloudFiles</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/simplify9/CloudFiles</RepositoryUrl>
+        <PackageIcon>icon.png</PackageIcon>
+        <RootNamespace>SW.CloudFiles.Extensions</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="../icon.png">
+            <Pack>True</Pack>
+            <PackagePath></PackagePath>
+        </None>
+    </ItemGroup>
+
+    <ItemGroup>
+        <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    </ItemGroup>
+
+
+    <ItemGroup>
+        <ProjectReference Include="..\SW.CloudFiles.GC\SW.CloudFiles.GC.csproj" />
+    </ItemGroup>
+
+</Project>

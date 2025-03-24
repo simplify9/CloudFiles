@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <PackageId>SimplyWorks.CloudFiles.GC</PackageId>
+        <Copyright>Simplify9</Copyright>
+        <Company>Simplify9</Company>
+        <Authors>Simplify9</Authors>
+        <Product>SimplyWorks.CloudFiles.GC</Product>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageProjectUrl>https://github.com/simplify9/CloudFiles</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/simplify9/CloudFiles</RepositoryUrl>
+        <PackageIcon>icon.png</PackageIcon>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Google.Cloud.Storage.V1" Version="4.11.0" />
+      <PackageReference Include="SimplyWorks.PrimitiveTypes" Version="8.0.0" />
+    </ItemGroup>
+    <ItemGroup>
+        <None Include="../icon.png">
+            <Pack>True</Pack>
+            <PackagePath></PackagePath>
+        </None>
+    </ItemGroup>
+</Project>
