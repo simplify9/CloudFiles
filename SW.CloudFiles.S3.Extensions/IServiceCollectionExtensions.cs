@@ -37,6 +37,8 @@ namespace SW.CloudFiles.Extensions
             if (configure != null) configure.Invoke(cloudFilesOptions);
 
             var serviceProvider = serviceCollection.BuildServiceProvider();
+            using var scope = serviceProvider.CreateScope();
+            var configuration = scope.ServiceProvider.GetRequiredService<IConfiguration>();
             serviceProvider.GetRequiredService<IConfiguration>().GetSection(CloudFilesOptions.ConfigurationSection).Bind(cloudFilesOptions);
 
             using (var client = cloudFilesOptions.CreateClient())
@@ -53,7 +55,7 @@ namespace SW.CloudFiles.Extensions
 
                 }
 
-                 var config = client.GetLifecycleConfigurationAsync(new GetLifecycleConfigurationRequest
+                var config = client.GetLifecycleConfigurationAsync(new GetLifecycleConfigurationRequest
                 {
                     BucketName = cloudFilesOptions.BucketName
                 }).WaitAndUnwrapException().Configuration;
