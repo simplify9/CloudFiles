@@ -52,7 +52,7 @@ public static class ServiceCollectionExtensions
         };
         return builder.Build();
     }
-    public static IServiceCollection AddOracleCloudFiles(this IServiceCollection serviceCollection,
+    public static IServiceCollection AddGoogleCloudFiles(this IServiceCollection serviceCollection,
         Action<GoogleCloudFilesOptions> configure = null)
     {
         var cloudFilesOptions = new GoogleCloudFilesOptions();
