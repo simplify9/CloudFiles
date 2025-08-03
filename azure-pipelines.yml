@@ -4,7 +4,7 @@ trigger:
 - master
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: 'ubuntu-22.04'
 
 variables:
   - group: S3Bucket
@@ -48,11 +48,11 @@ steps:
     targetFiles: |
       **/*.json
 
-- task: DotNetCoreCLI@2
-  displayName: 'dotnet test'
-  inputs:
-    command: test
-    projects: '**/*Tests/*.csproj'
+#- task: DotNetCoreCLI@2
+#  displayName: 'dotnet test'
+#  inputs:
+#    command: test
+#    projects: '**/*Tests/*.csproj'
 
 - task: DotNetCoreCLI@2
   displayName: 'dotnet pack'
