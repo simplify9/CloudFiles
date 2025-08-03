@@ -15,7 +15,7 @@
 
     <ItemGroup>
       <PackageReference Include="Google.Cloud.Storage.V1" Version="4.11.0" />
-      <PackageReference Include="SimplyWorks.PrimitiveTypes" Version="8.0.0" />
+      <PackageReference Include="SimplyWorks.PrimitiveTypes" Version="8.0.4" />
     </ItemGroup>
     <ItemGroup>
         <None Include="../icon.png">
