@@ -1,4 +1,3 @@
-using SW.CloudFiles.Extensions;
 using SW.PrimitiveTypes;
 
 namespace SW.CloudFiles.GC.UnitTests;
@@ -9,14 +8,13 @@ public class UnitTest
     [TestMethod]
     public async Task TestBasic()
     {
-
         var options = new GoogleCloudFilesOptions
         {
 
         };
         var client = options.BuildGoogleCloudStorageClient();
         Assert.IsNotNull(client);
-        var cloudFilesService = new CloudFilesService(client, options);
+        var cloudFilesService = new CloudFilesService(options);
         Assert.IsNotNull(cloudFilesService);
         var key = $"test{Guid.NewGuid():N}.txt";
         await cloudFilesService.WriteTextAsync("test", new WriteFileSettings
@@ -24,7 +22,5 @@ public class UnitTest
             Key = key,
             ContentType = "text/plain"
         });
-        
-        
     }
 }

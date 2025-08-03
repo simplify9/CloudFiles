@@ -2,38 +2,22 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using Google.Apis.Auth.OAuth2;
 using Google.Cloud.Storage.V1;
 using SW.PrimitiveTypes;
 
 namespace SW.CloudFiles.GC;
-public class Root
+
+public class CloudFilesService(GoogleCloudFilesOptions options) : ICloudFilesService
 {
-    public string type { get; set; }
-    public string project_id { get; set; }
-    public string private_key_id { get; set; }
-    public string private_key { get; set; }
-    public string client_email { get; set; }
-    public string client_id { get; set; }
-    public string auth_uri { get; set; }
-    public string token_uri { get; set; }
-    public string auth_provider_x509_cert_url { get; set; }
-    public string client_x509_cert_url { get; set; }
-    public string universe_domain { get; set; }
-}
-public class CloudFilesService(StorageClient storageClient, GoogleCloudFilesOptions options) : ICloudFilesService
-{
+    private readonly StorageClient _storageClient = options.BuildGoogleCloudStorageClient();
     
     // Create the StorageClient with optional credentials
 
     public async Task<RemoteBlob> WriteAsync(Stream inputStream, WriteFileSettings settings)
     {
-        
-        
-        var obj= await storageClient.UploadObjectAsync(options.BucketName, settings.Key, settings.ContentType, inputStream);
+        var obj= await _storageClient.UploadObjectAsync(options.BucketName, settings.Key, settings.ContentType, inputStream);
         
         return new RemoteBlob
         {
@@ -80,7 +64,7 @@ public class CloudFilesService(StorageClient storageClient, GoogleCloudFilesOpti
     public async Task<Stream> OpenReadAsync(string key)
     {
         var stream = new MemoryStream();
-        await storageClient.DownloadObjectAsync(options.BucketName, key, stream);
+        await _storageClient.DownloadObjectAsync(options.BucketName, key, stream);
         stream.Position = 0;
         return stream;
     }
@@ -89,7 +73,7 @@ public class CloudFilesService(StorageClient storageClient, GoogleCloudFilesOpti
     {
         var fileList = new List<CloudFileInfo>();
 
-        await foreach (var obj in storageClient.ListObjectsAsync(options.BucketName, prefix))
+        await foreach (var obj in _storageClient.ListObjectsAsync(options.BucketName, prefix))
         {
             var size = obj.Size ?? 0;
             fileList.Add(new CloudFileInfo
@@ -106,7 +90,7 @@ public class CloudFilesService(StorageClient storageClient, GoogleCloudFilesOpti
 
     public async Task<IReadOnlyDictionary<string, string>> GetMetadataAsync(string key)
     {
-        var obj = await storageClient.GetObjectAsync(options.BucketName, key);
+        var obj = await _storageClient.GetObjectAsync(options.BucketName, key);
         return new ReadOnlyDictionary<string,string>(obj.Metadata ?? new Dictionary<string,string>());
         
     }
@@ -115,7 +99,7 @@ public class CloudFilesService(StorageClient storageClient, GoogleCloudFilesOpti
     {
         try
         {
-            await storageClient.DeleteObjectAsync(options.BucketName, key);
+            await _storageClient.DeleteObjectAsync(options.BucketName, key);
             return true;
         }
         catch (Google.GoogleApiException ex) when (ex.HttpStatusCode == System.Net.HttpStatusCode.NotFound)

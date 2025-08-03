@@ -1,12 +1,7 @@
-using System;
 using System.Text.Json;
 using Google.Cloud.Storage.V1;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using SW.CloudFiles.GC;
-using SW.PrimitiveTypes;
 
-namespace SW.CloudFiles.Extensions;
+namespace SW.CloudFiles.GC;
 
 internal class GoogleJsonCredentialsModel
 {
@@ -23,11 +18,11 @@ internal class GoogleJsonCredentialsModel
     public string universe_domain { get; set; }
 }
 
-public static class ServiceCollectionExtensions
+public static class GoogleCloudFileOptionsExtensions
 {
     public static StorageClient BuildGoogleCloudStorageClient(this GoogleCloudFilesOptions options)
     {
-        var model = new GoogleJsonCredentialsModel()
+        var model = new GoogleJsonCredentialsModel
         {
             type = "service_account",
             project_id = options.ProjectId,
@@ -49,23 +44,4 @@ public static class ServiceCollectionExtensions
         };
         return builder.Build();
     }
-    public static IServiceCollection AddGoogleCloudFiles(this IServiceCollection serviceCollection,
-        Action<GoogleCloudFilesOptions> configure = null)
-    {
-        var cloudFilesOptions = new GoogleCloudFilesOptions();
-        if (configure != null) configure.Invoke(cloudFilesOptions);
-
-        var serviceProvider = serviceCollection.BuildServiceProvider();
-        serviceProvider.GetRequiredService<IConfiguration>().GetSection(CloudFilesOptions.ConfigurationSection)
-            .Bind(cloudFilesOptions);
-
-        var client = cloudFilesOptions.BuildGoogleCloudStorageClient();
-        serviceCollection.AddScoped<ICloudFilesService, CloudFilesService>();
-        serviceCollection.AddSingleton(cloudFilesOptions);
-        serviceCollection.AddSingleton((CloudFilesOptions)cloudFilesOptions);
-        serviceCollection.AddSingleton(client);
-        return serviceCollection;
-    }
 }
-
-

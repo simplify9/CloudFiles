@@ -15,19 +15,19 @@ namespace SW.CloudFiles.OC
 {
     public class CloudFilesService : ICloudFilesService, IDisposable
     {
-        private readonly OracleCloudFilesOptions cloudFilesOptions;
-        private readonly UploadManager uploadManager;
-        private readonly ObjectStorageClient client;
-        private readonly ILogger<CloudFilesService> logger;
+        private readonly OracleCloudFilesOptions _cloudFilesOptions;
+        private readonly UploadManager _uploadManager;
+        private readonly ObjectStorageClient _client;
+        private readonly ILogger<CloudFilesService> _logger;
 
         public CloudFilesService(OracleCloudFilesOptions cloudFilesOptions, ILogger<CloudFilesService> logger)
         {
-            this.cloudFilesOptions = cloudFilesOptions;
-            this.logger = logger;
-            var provider = new ConfigFileAuthenticationDetailsProvider(this.cloudFilesOptions.ConfigPath, "DEFAULT");
-            client = new ObjectStorageClient(provider);
+            _cloudFilesOptions = cloudFilesOptions;
+            _logger = logger;
+            var provider = new ConfigFileAuthenticationDetailsProvider(_cloudFilesOptions.ConfigPath, "DEFAULT");
+            _client = new ObjectStorageClient(provider);
 
-            uploadManager = new UploadManager(client, new UploadConfiguration());
+            _uploadManager = new UploadManager(_client, new UploadConfiguration());
         }
 
         public async Task<RemoteBlob> WriteAsync(Stream inputStream, WriteFileSettings settings)
@@ -36,19 +36,19 @@ namespace SW.CloudFiles.OC
             var metadata = settings.Metadata != null ? new Dictionary<string, string>(settings.Metadata) : null;
             var request = new PutObjectRequest
             {
-                NamespaceName = cloudFilesOptions.NamespaceName,
+                NamespaceName = _cloudFilesOptions.NamespaceName,
                 ContentType = mimeType,
-                BucketName = cloudFilesOptions.BucketName,
+                BucketName = _cloudFilesOptions.BucketName,
                 ObjectName = settings.Key,
                 OpcMeta = metadata,
                 PutObjectBody = inputStream,
             };
 
-            await uploadManager.Upload(new UploadManager.UploadRequest(request) { AllowOverwrite = true });
+            await _uploadManager.Upload(new UploadManager.UploadRequest(request) { AllowOverwrite = true });
 
             return new RemoteBlob
             {
-                Location = cloudFilesOptions.GetFileUrl(settings.Key),
+                Location = _cloudFilesOptions.GetFileUrl(settings.Key),
                 MimeType = mimeType
             };
         }
@@ -63,16 +63,16 @@ namespace SW.CloudFiles.OC
             var request = new PutObjectRequest
             {
                 ContentType = mimeType,
-                BucketName = cloudFilesOptions.BucketName,
+                BucketName = _cloudFilesOptions.BucketName,
                 ObjectName = settings.Key,
                 OpcMeta = metadata,
                 PutObjectBody = stream,
-                NamespaceName = cloudFilesOptions.NamespaceName
+                NamespaceName = _cloudFilesOptions.NamespaceName
             };
-            await uploadManager.Upload(new UploadManager.UploadRequest(request) { AllowOverwrite = true });
+            await _uploadManager.Upload(new UploadManager.UploadRequest(request) { AllowOverwrite = true });
             return new RemoteBlob
             {
-                Location = cloudFilesOptions.GetFileUrl(settings.Key),
+                Location = _cloudFilesOptions.GetFileUrl(settings.Key),
                 MimeType = mimeType
             };
         }
@@ -82,7 +82,7 @@ namespace SW.CloudFiles.OC
             throw new NotImplementedException();
         }
 
-        public string GetUrl(string key) => cloudFilesOptions.GetFileUrl(key);
+        public string GetUrl(string key) => _cloudFilesOptions.GetFileUrl(key);
 
         public WriteWrapper OpenWrite(WriteFileSettings settings)
         {
@@ -93,20 +93,20 @@ namespace SW.CloudFiles.OC
         {
             var getObjectObjectRequest = new GetObjectRequest()
             {
-                BucketName = cloudFilesOptions.BucketName,
-                NamespaceName = cloudFilesOptions.NamespaceName,
+                BucketName = _cloudFilesOptions.BucketName,
+                NamespaceName = _cloudFilesOptions.NamespaceName,
                 ObjectName = key,
             };
-            var response = await client.GetObject(getObjectObjectRequest);
+            var response = await _client.GetObject(getObjectObjectRequest);
             return response.InputStream;
         }
 
         public async Task<IEnumerable<CloudFileInfo>> ListAsync(string prefix)
         {
-            var response = await client.ListObjects(new ListObjectsRequest
+            var response = await _client.ListObjects(new ListObjectsRequest
             {
-                BucketName = cloudFilesOptions.BucketName,
-                NamespaceName = cloudFilesOptions.NamespaceName,
+                BucketName = _cloudFilesOptions.BucketName,
+                NamespaceName = _cloudFilesOptions.NamespaceName,
                 Prefix = prefix,
                 Fields = "size"
             });
@@ -119,10 +119,10 @@ namespace SW.CloudFiles.OC
         }
         public async Task<IReadOnlyDictionary<string, string>> GetMetadataAsync(string key)
         {
-            var headObject = await client.HeadObject(new HeadObjectRequest()
+            var headObject = await _client.HeadObject(new HeadObjectRequest()
             {
-                BucketName = cloudFilesOptions.BucketName,
-                NamespaceName = cloudFilesOptions.NamespaceName,
+                BucketName = _cloudFilesOptions.BucketName,
+                NamespaceName = _cloudFilesOptions.NamespaceName,
                 ObjectName = key
             });
  
@@ -144,21 +144,21 @@ namespace SW.CloudFiles.OC
         {
             try
             {
-                await client.DeleteObject(new DeleteObjectRequest
+                await _client.DeleteObject(new DeleteObjectRequest
                 {
-                    BucketName = cloudFilesOptions.BucketName,
-                    NamespaceName = cloudFilesOptions.NamespaceName,
+                    BucketName = _cloudFilesOptions.BucketName,
+                    NamespaceName = _cloudFilesOptions.NamespaceName,
                     ObjectName = key
                 });
                 return true;
             }
             catch (Exception e)
             {
-                logger.LogError(e, "Failed to delete file");
+                _logger.LogError(e, "Failed to delete file");
                 return false;
             }
         }
 
-        public void Dispose() => client?.Dispose();
+        public void Dispose() => _client?.Dispose();
     }
 }
