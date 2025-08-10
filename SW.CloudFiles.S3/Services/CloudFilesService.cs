@@ -172,7 +172,7 @@ public class CloudFilesService : IDisposable, ICloudFilesService
 
         foreach (var metadataKey in response.Metadata.Keys)
         {
-            result.Add(metadataKey.Replace(metadataPrefix, ""), response.Metadata[metadataKey]);
+            result.TryAdd(metadataKey.Replace(metadataPrefix, ""), response.Metadata[metadataKey]);
         }
 
 
